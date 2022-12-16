@@ -20,3 +20,11 @@ graph TD;
     B-->D;
     C-->D;
 ```
+
+
+Code example:
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+```

@@ -21,6 +21,9 @@ const config = {
     mermaid: {
       theme: {light: 'neutral', dark: 'forest'},
     },
+    prism: {
+      additionalLanguages: ['rust'],
+    },
   },
 
   // GitHub pages deployment config.
@@ -88,12 +91,9 @@ const config = {
                 label: 'Start',
                 to: '/docs/intro',
               },
-            ],
-            title: 'Lightpaper',
-            items: [
               {
-                label: 'Start',
-                to: '/docs/intro',
+                label: 'Lightpaper',
+                to: '/docs/papers/lightpaper',
               },
             ],
           },
