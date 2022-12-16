@@ -8,8 +8,7 @@ const FeatureList = [
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Learn about Fair Squares
       </>
     ),
   },
@@ -18,8 +17,7 @@ const FeatureList = [
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Fair Squares will be a parachain/thread that allows users to pariticpate in a decentralized and fair way in housing
       </>
     ),
   },

@@ -6,15 +6,35 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Fair Squares docs',
-  tagline: 'Fair housing for all explained',
+  title: 'Fair Squares documentation',
+  tagline: '',
   url: 'https://docs.fair-squares.nl',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'Fair-Squares', // Usually your GitHub org/user name.
-  projectName: 'fair-squares', // Usually your repo name.
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
+  themeConfig: {
+    mermaid: {
+      theme: {light: 'neutral', dark: 'forest'},
+    },
+  },
+
+  // GitHub pages deployment config.
+  // If you aren't using GitHub pages, you don't need these.
+  organizationName: 'fair-squares', // Usually your GitHub org/user name.
+  projectName: 'fs-docs', // Usually your repo name.
+
+  // Even if you don't use internalization, you can use this field to set useful
+  // metadata like html lang. For example, if your site is Chinese, you may want
+  // to replace "en" with "zh-Hans".
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en','nl'],
+  },
 
   presets: [
     [
@@ -24,11 +44,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-        },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
+          // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
@@ -45,7 +61,7 @@ const config = {
       navbar: {
         title: 'Fair Squares',
         logo: {
-          alt: 'My Site Logo',
+          alt: 'FS logo',
           src: 'img/logo.svg',
         },
         items: [
@@ -53,24 +69,30 @@ const config = {
             type: 'doc',
             docId: 'intro',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Docs',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/facebook/docusaurus',
-            label: 'GitHub',
+            href: 'https://github.com/fair-squares/fair-squares',
+            label: 'FS GitHub',
             position: 'right',
           },
         ],
       },
       footer: {
-        style: 'dark',
+        style: 'light',
         links: [
           {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
+                label: 'Start',
+                to: '/docs/intro',
+              },
+            ],
+            title: 'Lightpaper',
+            items: [
+              {
+                label: 'Start',
                 to: '/docs/intro',
               },
             ],
@@ -79,16 +101,16 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                label: 'Polkaverse',
+                href: 'https://polkaverse.com/accounts/3sJC5B7bzqbTYJvQSWvaT4CgXJHdwv4EEduP4oE8hEGS8749',
               },
               {
                 label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
+                href: 'https://discordapp.com/invite/5u3dxE49V5',
               },
               {
                 label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
+                href: 'https://twitter.com/fairsquares',
               },
             ],
           },
@@ -96,17 +118,13 @@ const config = {
             title: 'More',
             items: [
               {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/Fair-Squares/fair-squares',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Fair Squares, Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,
