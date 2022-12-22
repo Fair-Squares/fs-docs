@@ -9,7 +9,7 @@ const config = {
   title: 'Fair Squares documentation',
   tagline: 'Learn all about a about fair housing protocol !',
   url: 'https://docs.fair-squares.nl',
-  baseUrl: '/fs-docs',
+  baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
