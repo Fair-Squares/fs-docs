@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Fair Squares documentation',
   tagline: 'Learn all about a about fair housing protocol !',
-  url: 'https://docs.fair-squares.nl',
+  url: 'https://fair-squares.github.io/fs-docs',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
