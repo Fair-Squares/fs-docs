@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 ---
-# Intro ? 
+# Intro
 
 The Fair Squares (FS) platform enables fractional ownership of real estate for future rental agreements. With FS, the housing market becomes more transparent, fair and accessible for tenants, co-owners and investors. 
 At its core, FS is a community-agreed protocol that executes rental agreements with the houses that were invested in. This makes it possible to have affordable housing with a return on social investments.
