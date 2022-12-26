@@ -30,3 +30,11 @@ Our current development is funded by [Web3 Foundation Grants Program](https://gi
 
 ### What is the token distribution ?
 
+```mermaid
+pie title Coin Distribution
+    "Team" : 15
+    "Investors" : 10
+    "Other" : 7
+    "Parachain + crowdloan reserves": 8
+    "Users incentives" : 60
+```

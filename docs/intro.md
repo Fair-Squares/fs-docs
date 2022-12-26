@@ -17,4 +17,3 @@ To learn more and get in touch with us, please join our [discord channel FS](htt
 
 ### What you want to do ? 
 
-- [Learn more about Fair Squares](/docs/wa-more)

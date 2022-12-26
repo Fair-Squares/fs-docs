@@ -100,7 +100,7 @@ const config = {
               },
               {
                 label: 'Lightpaper',
-                to: '/docs/papers/lightpaper',
+                to: '/docs/learn/lightpaper',
               },
             ],
           },
