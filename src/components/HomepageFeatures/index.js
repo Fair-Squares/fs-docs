@@ -8,7 +8,7 @@ const FeatureList = [
     // Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Learn about Fair Squares
+        Learn about Fair Squares and the design of the housing cooperation / DAO protocol for equitable housing.
       </>
     ),
   },
@@ -17,7 +17,7 @@ const FeatureList = [
     // Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Fair Squares will be a parachain/thread that allows users to pariticpate in a decentralized and fair way in housing
+        Fair Squares will be a parachain/thread that allows users to participate in a decentralized and transparent housing cooperative
       </>
     ),
   },
@@ -26,7 +26,7 @@ const FeatureList = [
     // Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Learn how to participate in the Fair Squares DAO
+        Learn how to run our node software and in the future we will publish guides how to use the app.
       </>
     ),
   },

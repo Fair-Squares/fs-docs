@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Fair Squares documentation',
-  tagline: 'Learn all about a about fair housing protocol !',
+  tagline: 'Learn on this website all about FS design, philosophy, technical workings and more!',
   url: 'https://docs.fair-squares.nl',
   baseUrl: '/',
   onBrokenLinks: 'throw',
