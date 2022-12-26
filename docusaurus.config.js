@@ -8,8 +8,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Fair Squares documentation',
   tagline: 'Learn on this website all about FS design, philosophy, technical workings and more!',
-  url: 'https://docs.fair-squares.nl',
-  baseUrl: '/',
+  url: 'https://fair-squares.github.io',
+  baseUrl: '/fs-docs/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
@@ -28,10 +28,10 @@ const config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  // organizationName: 'fair-squares', // Usually your GitHub org/user name.
-  // projectName: 'fs-docs', // Usually your repo name.
-  // deploymentBranch: 'gh-pages',
-  // trailingSlash: true,
+  organizationName: 'fair-squares', // Usually your GitHub org/user name.
+  projectName: 'fs-docs', // Usually your repo name.
+  deploymentBranch: 'gh-pages',
+  trailingSlash: false,
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
