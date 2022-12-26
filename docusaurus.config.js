@@ -9,7 +9,7 @@ const config = {
   title: 'Fair Squares documentation',
   tagline: 'Learn on this website all about FS design, philosophy, technical workings and more!',
   url: 'https://fair-squares.github.io',
-  baseUrl: '/fs-docs/',
+  baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
