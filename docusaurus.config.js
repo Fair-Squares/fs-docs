@@ -67,7 +67,7 @@ const config = {
         title: 'Fair Squares',
         logo: {
           alt: 'FS logo',
-          src: 'img/logo.svg',
+          src: 'img/logo.png',
         },
         items: [
           {
@@ -75,6 +75,11 @@ const config = {
             docId: 'intro',
             position: 'left',
             label: 'Docs',
+          },
+          {
+          href: 'https://www.fair-squares.nl',
+          position: 'left',
+          label: 'Website',
           },
           {
             href: 'https://github.com/fair-squares/fair-squares',

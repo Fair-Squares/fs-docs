@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 # What is FS ? 
@@ -9,3 +9,24 @@ sidebar_position: 2
 We are zooming much more on the problem definition, stakeholders and the solution in our paper on our [website](https://fair-squares.nl/). To learn more and get in touch with us, please join our [discord channel FS](https://discord.gg/5u3dxE49V5)
 
 Our current development is funded by [Web3 Foundation Grants Program](https://github.com/w3f/Grants-Program)
+
+### How will it work ? 
+
+### How will it be deployed ? 
+
+### What is the roadmap ?
+
+### What is the team ?
+
+### What is the technology stack ?
+
+### What is the business model ?
+
+### What is the tokenomics ?
+
+### What is the governance ?
+
+### What is the token ?
+
+### What is the token distribution ?
+
