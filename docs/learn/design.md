@@ -8,7 +8,12 @@ This section explains the mechanics of each Fair Squares pallets and runtime. A 
 ** The descriptions given reflect the current stage of development, and will be subject to changes in the future.** 
 The focus will be on user experience and future investors, for this reason, some technical aspects might be ignored.
 
-## Characters
+
+import TOCInline from '@theme/TOCInline';
+
+<TOCInline toc={toc} />
+
+## 1) Characters
 The roles are distributed as follows: 1 Servicer, 1 Seller, 1 Notary, 1 Representative applicant, 2 dummy Representatives (set by default), 2 Tenants applicants, and 8 Investors. For more details on each character, see _Table 1_ below.
 
 
@@ -32,11 +37,117 @@ The roles are distributed as follows: 1 Servicer, 1 Seller, 1 Notary, 1 Represen
 | Bob//stash | Investor| $6,000,000 |
 _Table 1: Description of the different characters._
 
-## 1) Roles Pallet
+## 2) Roles Pallet
 The first step in the workflow is to set roles using the roles pallet. Users apply to the role they would like to receive using the `set_role` function: 
 - Investors and Tenants, receive the role right away.
 - For Sellers/Notary/Servicer/Representative, they need to go through an approval that varies with the requested role. Their request is therefore sent to a waiting list first.
 - Administrator & Councilmember are attributed by default and are not completely managed by the Role pallet: we will refer to them as special roles, and other roles will be referred to as standard roles. In a live environment these will be appointed with governance.  Each user can only have one standard role.
 - The maximum number of roles that can be attributed is presently fixed at 200.
 Alice, as the platform administrator, possesses the Servicer role by default. As a servicer, her role is to examine/approve/reject. Seller, Servicer, and Notary role requests by using the `account_approval` and/or `account_rejection` functions. She also can transfer her Administrator role to someone else (She will then lose it) by using the `set_manager` function.
-	In _Table 2_, we give an overview of the information & actions linked to each role. The Available actions section of this table will be updated for each pallet:
+
+In _Table 2_, we give an overview of the information & actions linked to each role. The Available actions section of this table will be updated for each pallet:
+
+
+<table>
+  <tr>
+   <td>
+   </td>
+   <td>Servicer</td>
+   <td>Seller</td>
+   <td>Notary</td>
+   <td>Representative</td>
+   <td>Investor</td>
+   <td>Tenant</td>
+  </tr>
+  <tr>
+   <td colspan="7" >Available Fields/Information</td>
+  </tr>
+  <tr>
+   <td>account_id</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+  </tr>
+  <tr>
+   <td>age</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+  </tr>
+  <tr>
+   <td>activated</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>✖</td>
+   <td>✖</td>
+  </tr>
+  <tr>
+   <td>verifier</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+  </tr>
+  <tr>
+   <td>assets_accounts</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+  </tr>
+  <tr>
+   <td>rent</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>◎</td>
+  </tr>
+  <tr>
+   <td colspan="7" >Available Actions</td>
+  </tr>
+  <tr>
+   <td>Approve/Reject  a role request</td>
+   <td>◎</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+  </tr>
+  <tr>
+   <td>Set a role</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+  </tr>
+  <tr>
+   <td>Waiting List</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>✖</td>
+   <td>✖</td>
+  </tr>
+</table>
+
+_Table 2: Available Information and actions for each role in the Roles pallet._
+
+Finally, according to the rules described so far, users request and receive their roles, in order to reach the distribution shown in Table 1. Time to move to the next pallet: Housing Fund.
