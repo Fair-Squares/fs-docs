@@ -150,7 +150,7 @@ In _Table 2_, we give an overview of the information & actions linked to each ro
 
 _Table 2: Available Information and actions for each role in the Roles pallet._
 
-Finally, according to the rules described so far, users request and receive their roles, in order to reach the distribution shown in Table 1. Time to move to the next pallet: Housing Fund.
+Finally, according to the rules described so far, users request and receive their roles, in order to reach the distribution shown in _Table 1_. Time to move to the next pallet: Housing Fund.
 
 ## 3) Housing Fund Pallet
 In the second step, investors contribute to the Housing Fund. This operation is managed by the pallet described in this section: the Pallet Housing Fund.
@@ -388,7 +388,7 @@ After creation, the asset can be submitted for review to a house council, before
 
 _Table 4: Available Information and actions for each role in the Onboarding pallet._
 
-You can also see in Table 4 that the Onboarding pallet allows a servicer to reject an asset proposal for editing of destruction, depending on the case at hand. From the NFT pallet side, this means editing the NFT’s metadata, or burning the NFT. Some of the NFT pallet main functions are shown in Table 5.
+You can also see in _Table 4_ that the Onboarding pallet allows a servicer to reject an asset proposal for editing of destruction, depending on the case at hand. From the NFT pallet side, this means editing the NFT’s metadata, or burning the NFT. Some of the NFT pallet main functions are shown in _Table 5_.
 
 Creation & submission of a proposal is not free of charge for the Seller: a proposal fee, which represents 10% of the asset price (Configurable), is reserved at creation of the proposal, and slashed if the proposal is destroyed. If rejected for editing, only 10% of the reserved fees are slashed, and if accepted, remaining reserved fees are returned.
 
