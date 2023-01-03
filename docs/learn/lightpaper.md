@@ -36,7 +36,7 @@ FS evolves in consultation with the community. The governance module is essentia
 development of the protocol based on dialogue and discussion with the FS community.
 The open nature of FS is shaped by allowing stakeholders to propose changes that comply with
 legislation. The FS council is similar to Kusama, a group of people that at heart care for a more fair
-housing market vote to the best of their ability. This is why the council should consist or organisations or
+housing market vote to the best of their ability. This is why the council should consist of organisations or
 leaders that have expertise in real estate, housing and financing so they can steer the community to the
 best direction.
 
@@ -57,7 +57,7 @@ stakeholders who provide a service are transparent and guarantee the service. A 
 keep track of which roles are successfully delivering their share of the service to be provided.
 
 In a blockchain, disagreements are difficult to resolve, unless there is a path designed for handling
-disagreements. Since we are dealing with trust of actors in the real-world such as valuations or whether
+them. Since we are dealing with trust of actors in the real-world such as valuations of whether
 a service has been done right or wrong, we need stakeholders who help the investors and tenants as
 confidants in the system. This is a common problem in blockchains and it’s a hard problem to solve
 because it makes you trust the judgment of one person.
@@ -81,7 +81,7 @@ rental housing market.
 
 ### Advantages
 
-Why should we replace the current system with a decentralized application? We believe the cheaper access to capital and making  link to fair access to housing is possible. With this we can solve a major urgent socio-economic problem. Together with the FS pilot partners, we will map out what more fair housing can amount to and what the statistics are for people. And then create value and more living well-being for people from the ecosystem method, reputation-based.  The information sources below will be accessible live on the blockchain in connection with verified data (oracles) outside the FS Information ecosystem chain.
+Why should we replace the current system with a decentralized application? We believe the cheaper access to capital and making  link to fair access to housing is possible. With this we can solve a major urgent socio-economic problem. Together with the FS pilot partners, we will map out what more fair housing can amount to and what the statistics are for people. It then becomes possible to create value and more living well-being for people/members of the FS ecosystem, reputation-based. The information sources below will be accessible live on the blockchain in connection with verified data (oracles) outside the FS Information ecosystem chain.
 
 **Investors**
 
