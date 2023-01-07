@@ -119,6 +119,10 @@ const config = {
                 label: 'Twitter',
                 href: 'https://twitter.com/fairsquares',
               },
+              {
+                label: 'Linkedin',
+                href: 'https://www.linkedin.com/company/fairsquares/',
+              }
             ],
           },
           {
