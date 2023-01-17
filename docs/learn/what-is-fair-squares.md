@@ -12,23 +12,32 @@ Our current development is funded by [Web3 Foundation Grants Program](https://gi
 
 ### How will it work ?
 
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/6l1n9SsK-yc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 ### How will it be deployed ?
 
-### What is the roadmap ?
+We are currently developing towards a standalone testnet with an interface so users can test the node-software online. We are looking to experiment and research further with the knowledge and software we have how we can transition towards legitimate software that can be deployed on a parachain. 
 
-### What is the team ?
-
-### What is the technology stack ?
 
 ### What is the business model ?
 
-### What are the token economics ?
+There is no business-model for Fair Squares as we don't perceive it as a business. We are looking to build a neutral housing protocol that can be deployed with a simple formula, since the requirement is housing. We are looking to turn this idea into a protocol that works for everyone the same and is predictable and affordable to use. 
 
-### What is the governance ?
+There will be earnings of the protocol that will be owned by it's token holders to decide what to do with it. The earnings will come from most transactions that are happening on the protocol, such as buying, renting, payments etc. 
 
-### What is the token ?
+### How does governance work ?
+
+We are looking at three layers of governance for Fair Squares. 
+
+1. __The Economic and Technical level: __allowing payment options, integrations of new KYC provider, economic parameter changes changes, protocol upgrades, liability, lawfulness, etc.
+
+2. __Housing protocol level: __return-on-rent, appoint juror, listen to concerns, propose parameter changes.
+
+3. __House level: __ maintenance, improvements, liability, insurance, representative and tenancy
 
 ### What is the token distribution ?
+
+We are looking for a long term distribution of the tokens (ownership protocol and governance token) to ensure that the protocol is sustainable and that the token holders are incentivized to work for the protocol for it to stabilize.
 
 ```mermaid
 pie title Coin Distribution
