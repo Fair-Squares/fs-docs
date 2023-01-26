@@ -37,13 +37,5 @@ We are looking at three layers of governance for Fair Squares.
 
 ### What is the token distribution ?
 
-We are looking for a long term distribution of the tokens (ownership protocol and governance token) to ensure that the protocol is sustainable and that the token holders are incentivized to work for the protocol for it to stabilize.
+We are looking for a long term distribution of the tokens (ownership protocol and governance token) to ensure that the protocol ownership is widely distributed. The tokens will be distributed with participation in the protocol, you can think of investing, voting, selling and for the businesses that are participating. The use-case of the token will be governance and ownership of the protocol. 
 
-```mermaid
-pie title Coin Distribution
-    "Team" : 15
-    "Investors" : 10
-    "Other" : 7
-    "Parachain + crowdloan reserves": 8
-    "Users incentives" : 60
-```
