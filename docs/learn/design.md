@@ -617,7 +617,29 @@ _Table 8: Temporary asset share distribution._
 
 The next step explains how the Eligible investors list is used to distribute the asset among the investors. In this new scenario, Mr. A already received his asset share (x0_final). Other members still have temporary shares, and the diagram below explains the process used to determine Mr. B final share (x1_final). Y is the total asset share: 100%.
 
-![proposal submission](../../img/bidding_flow.jpg)
+![bidding flow](../../img/bidding_flow.jpg)
 _Figure 2 - Final Asset share calculation process._
 
 The same process is used for Mr. C share calculation. In the case of Mr. C however, instead of (Y-x0_final) in check no. 1, we will use: (Y - x0_final - x1_final), as we want the remaining asset share after distribution to Mr. B when doing the different checks.
+
+## 7) Finalizer Pallet
+
+**Onboarded** assets still need to go through a final round of scrutiny before being considered valid for Purchase.
+throught the **Finalizer** pallet, A _Notary_ receives **Onboarded** assets information from the **Bidding** pallet, 
+and conducts a deeper off-chain/Legal investigation: the asset's status then changes from **Onboarded** to **Finalising**. 
+Assets accepted by the _Notary_ receive the status **Finalised**, while others are **Rejected**.
+
+## 8) Share Distributor pallet
+
+Once an asset has the status **Finalised**, the **Bidding** pallet will first use the **Share Distributor** pallet to create a virtual account connected to the new owners. This virtual will store the NFT created earlier during asset submission by the seller. Once  it is confirmed that the Nft corresponding to this asset, was transfered from the Seller to the virtual account/asset owners, the seller account finally receives the payment due for the asset purchase. 
+
+![share distributor](../../img/workflow_p1.png)
+_Figure 2 - Share Distributor flow part.1: Creation of a virtual account to store the asset NFT_
+
+In the second task of the **Share_Distributor** pallet, the virtual account mints 1000 ownership tokens specific to the asset. These tokens will
+be distributed to the owners according to their contribution to the asset purchase: a 20% contribution will receive 200 ownership tokens. The possession of ownership tokens, together with the informations contained in the Nft, stored in the virtual account, are what define the fractional ownership of the asset by an individual in the **Fair Squares** ecosystem.
+
+![share distributor](../../img/workflow_p2.png)
+_Figure 2 - Share Distributor flow part.2: Minting and distribution of Ownership tokens by the virtual account._
+
+
