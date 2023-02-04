@@ -624,9 +624,9 @@ The same process is used for Mr. C share calculation. In the case of Mr. C howev
 
 ## 7) Finalizer Pallet
 
-**Onboarded** assets still need to go through a final round of scrutiny before being considered valid for Purchase.
-throught the **Finalizer** pallet, A _Notary_ receives **Onboarded** assets information from the **Bidding** pallet, 
-and conducts a deeper off-chain/Legal investigation: the asset's status then changes from **Onboarded** to **Finalising**. 
+**Onboarded** assets still need to go through a final round of scrutiny before being considered valid for `purchase`.
+Throughout the **Finalizer** pallet, a _Notary_ receives **Onboarded** assets information from the **Bidding** pallet, 
+and conducts a deeper off-chain legal investigation: the asset's status then changes from **Onboarded** to **Finalising**. 
 Assets accepted by the _Notary_ receive the status **Finalised**, while others are **Rejected**.
 
 ## 8) Share Distributor pallet
