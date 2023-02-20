@@ -553,7 +553,89 @@ This is the governance system used to decide if an asset is valid for purchase o
 
 A summary of the proposal submission workflow is shown in _Figure 1_ below.
 
-![proposal submission](../../img/proposal_submission.png)
+```mermaid
+flowchart LR;
+ subgraph S0[<font size=5>Seller Asset_status:\nEditing]
+    A(<font size=5>Mint/Edit an \nNFT);
+
+        end
+
+    subgraph S1[<font size=5>System Asset_status:\nEditing]
+    subgraph Title1[ ]
+    subgraph T1[ ]
+    B(<font size=5>Create an \nAsset proposal);
+    end
+    end
+    end
+
+    subgraph S2[<font size=5,style=bold>Seller Asset_status:\nEditing]
+    subgraph Title2[ ]
+    subgraph T2[ ]
+    C(<font size=5>Submit proposal for Review);
+    end
+    end
+    end
+
+    subgraph S3[<font size=6>System Asset_status:\nReviewing]
+    subgraph Title3[ ]
+    D(<font size=5>Create a Council referendum);
+    end
+    end
+
+    subgraph S4[<font size=5>Council Asset_status:\nReviewing]
+    subgraph Title4[ ]
+    subgraph T3[ ]
+    E0(<font size=5>Approve);
+    F0(<font size=5>Reject);
+    end
+    end
+    end
+
+    subgraph S5[<font size=5>System Asset status:\nVoting or Rejected]
+    subgraph Title5[ ]
+    G(<font size=5>Create an Investor \nreferendum);
+    H0(<font size=5>Edit);
+    I0(<font size=5>Destroy);
+    end
+    end
+
+    subgraph S6[<font size=5>Investors Asset_status:\nVoting or Rejected]
+    subgraph Title6[ ]
+    subgraph T4[ ]
+    E1(<font size=5>Approve);
+    F1(<font size=5>Reject);
+    end
+    end
+    end
+
+    subgraph S7[<font size=7>System \nAsset_status: Voting or Rejected];
+    J(<font size=6>Onboard \nAsset);
+    H1(<font size=6>Edit);
+    I1(<font size=6>Destroy);
+    end
+
+    A --> B;
+    B --> C;
+    C --> D;
+    D --> E0;
+    D --> F0;
+    F0 --> G;
+    E0 --> H0;
+    E0 --> I0;
+    H0 -.-> A;
+    G --> E1;
+    G --> F1;
+    E1 --> J;
+    F1 --> H1;
+    F1 -->I1;
+    H1 -.-> A;
+
+    classDef Title fill:none,stroke:none;
+    class Title1,Title2,Title3,Title4,Title5,Title6,T1,T2,T3,T4 Title
+    classDef style0 fill:#FFB833,stroke-dasharray: 5 5,stroke-width:2px,text-align:center;
+    class S0,S1,S2,S3,S4,S5,S6,S7 style0
+
+```
 _Figure 1 - Proposal submission workflow. This workflow only shows the tasks performed by the **NFT**, **Onboarding**, and **Voting** pallets._
 
 ## 6) Bidding pallet
