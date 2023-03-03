@@ -724,4 +724,20 @@ be distributed to the owners according to their contribution to the asset purcha
 ![share distributor](../../img/workflow_p2.png)
 _Figure 2 - Share Distributor flow part.2: Minting and distribution of Ownership tokens by the virtual account._
 
+Up until this point the purpose of the workflow was to purchase an asset. With the **Asset Management** & **Tenancy** pallets, we are entering the second part of the workflow, revolving around the purchased asset management.
+## 9) Tenancy pallet
 
+There are no string attached after receiving the _Tenant_ role in the **Role Pallet**. However, in order to become an active _Tenant_, the **Tenancy Pallet**
+must be used.
+- First and foremost, the **Tenancy Pallet** allows a prospecting _Tenant_ to request a purchased asset. For this purpose, the future _Tenant_ will have to register more informations about himself, and become a prospecting/registered _Tenant_. The asset request notifies the corresponding Representative, who, after evaluation of the _Tenant_ profile, will provide his/her judgement to the asset Owners, and start a referendum for them to take the final decision.
+- Once accepted by a group of owner, the prospecting _Tenant_ can pay the guaranty deposit of the asset, and seal the deal. this action connects him to the asset requested.
+- Finally, the **Tenancy Pallet** allows the _Tenant_ to pay his monthly rent at any moment. The length of the lease contract being 1 year, the _Tenant_ won't be able to do more than 12 payments.  
+
+## 10) Asset Management pallet
+
+The implemented workflow in this pallet is as follows:
+
+1. Election of a _Representative_ by the new owners
+An aspirant _Representative_ can request the role through the **Roles Pallet**, and are added to a waiting list. Using the **Asset_Management Pallet**, any owner of any asset can consult the list, and open a referendum for his/her group of owners, in order to elect a _Representative_. An elected _Representative_ is connected to the corresponding asset of the owner's group. Note that a _Representative_ can be connected to several assets.
+
+2. 
