@@ -26,7 +26,7 @@ const FeatureList = [
     // Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Learn how to run our node software and in the future we will publish guides how to use the app.
+        Learn how to use the Fair Squares application in guides and tutorials we have published.
       </>
     ),
   },
