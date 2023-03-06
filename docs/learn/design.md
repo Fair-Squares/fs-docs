@@ -65,12 +65,12 @@ In _Table 2_, we give an overview of the information & actions linked to each ro
   <tr>
    <td>
    </td>
-   <td>Servicer</td>
-   <td>Seller</td>
-   <td>Notary</td>
-   <td>Representative</td>
-   <td>Investor</td>
-   <td>Tenant</td>
+   <td style={{color:'red'}}>Servicer</td>
+   <td style={{color:'red'}}>Seller</td>
+   <td style={{color:'red'}}>Notary</td>
+   <td style={{color:'red'}}>Representative</td>
+   <td style={{color:'red'}}>Investor</td>
+   <td style={{color:'red'}}>Tenant</td>
   </tr>
   <tr>
    <td colspan="7" ><b>Available Fields/Information</b></td>
@@ -179,7 +179,7 @@ In the second step, investors use the **Housing Fund** pallet to contribute to a
 <td>Seller</td>
 <td>Notary</td>
 <td>Representative</td>
-<td>Investor</td>
+<td style={{color:'red'}}>Investor</td>
 <td>Tenant</td>
 </tr>
 <tr>
@@ -299,8 +299,8 @@ The **Onboarding** pallet also introduces the concept of an assets status (**EDI
 <tbody>
 <tr>
 <td>&nbsp;</td>
-<td>Servicer</td>
-<td>Seller</td>
+<td style={{color:'red'}}>Servicer</td>
+<td style={{color:'red'}}>Seller</td>
 <td>Notary</td>
 <td>Representative</td>
 <td>Investor</td>
@@ -414,7 +414,7 @@ The **Onboarding** pallet also introduces the concept of an assets status (**EDI
 </tbody>
 </table>
 
-_Table 4: Available Information and actions for each role in the **Onboarding** pallet._
+_Table 4: Available Information and actions for **Servicer** and **Seller** roles in the **Onboarding Pallet**._
 
 You can also see in _Table 4_ that the **Onboarding** pallet allows a **servicer** to reject an asset proposal for editing or destruction, depending on the case at hand. From the **NFT** pallet side, this means editing the NFT’s metadata, or burning the NFT. Some of the main functions of the **NFT** pallet are shown in _Table 5_.
 
@@ -424,8 +424,8 @@ Creation & submission of a proposal is not free of charge for the **Seller**: a 
 <tbody>
 <tr>
 <td>&nbsp;</td>
-<td>Servicer</td>
-<td>Seller</td>
+<td style={{color:'red'}}>Servicer</td>
+<td style={{color:'red'}}>Seller</td>
 <td>Notary</td>
 <td>Representative</td>
 <td>Investor</td>
@@ -539,9 +539,111 @@ Creation & submission of a proposal is not free of charge for the **Seller**: a 
 </tbody>
 </table>
 
-_Table 5: Available Information and actions for each role in the NFT pallet._
+_Table 5: Available Information and actions for **Servicer** and **Seller** roles in the in the **NFT Pallet**._
 
 ## 5) Voting pallet
+
+<table>
+  <tr>
+   <td>
+   </td>
+   <td style={{color:'red'}}>Servicer</td>
+   <td>Seller</td>
+   <td>Notary</td>
+   <td>Representative</td>
+   <td style={{color:'red'}}>Investor</td>
+   <td>Tenant</td>
+  </tr>
+  <tr>
+   <td colspan="7" ><b>Available Fields/Information</b></td>
+  </tr>
+  <tr>
+   <td>account_id</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+  </tr>
+  <tr>
+   <td>age</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+  </tr>
+  <tr>
+   <td>activated</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>✖</td>
+   <td>✖</td>
+  </tr>
+  <tr>
+   <td>verifier</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+  </tr>
+  <tr>
+   <td>assets_accounts</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>◎</td>
+   <td>◎</td>
+   <td>◎</td>
+  </tr>
+  <tr>
+   <td>rent</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>◎</td>
+  </tr>
+  <tr>
+   <td colspan="7" ><b>Available Actions</b></td>
+  </tr>
+  <tr>
+   <td>council_vote</td>
+   <td>◎</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+  </tr>
+  <tr>
+   <td>council_close_vote</td>
+   <td>◎</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+  </tr>
+  <tr>
+   <td>investor_vote</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>✖</td>
+   <td>◎</td>
+   <td>✖</td>
+  </tr>
+</table>
+
+_Table 6: Available Information and actions for **Seller** and **Investor** roles in the **Voting pallet**._
 
 This is the governance system used to decide if an asset is valid for purchase or not. It is composed of two phases:
 
@@ -663,9 +765,9 @@ Through the use of a **First Come First Serve** principle, the bidding pallet cr
 | Alice//stash |              49              |      $3,000,000.00       |                  6.9                   |
 |  Bob//stash  |              48              |      $2,000,000.00       |                  4.6                   |
 
-_Table 6: shares & contributions._
+_Table 7: shares & contributions._
 
-In this example, we will consider an asset with a price of 10 million US dollars. _Table 7_ shows a brief recap of the scenario's general configuration :
+In this example, we will consider an asset with a price of 10 million US dollars. _Table 8_ shows a brief recap of the scenario's general configuration :
 
 |                 | USD         | %   |
 | --------------- | ----------- | --- |
@@ -674,7 +776,7 @@ In this example, we will consider an asset with a price of 10 million US dollars
 | Min Asset share | $500,000    | 5   |
 | Max Asset share | $4,000,000  | 40  |
 
-_Table 7: Scenario's setting._
+_Table 8: Scenario's setting._
 
 The following criteria are used to organize investors who will become future owners of an asset:
 
@@ -695,7 +797,7 @@ The following criteria are used to organize investors who will become future own
 | Alice//stash |              49              |      $3,000,000.00       |         30          |
 |  Bob//stash  |              48              |      $2,000,000.00       |         20          |
 
-_Table 8: Temporary asset share distribution._
+_Table 9: Temporary asset share distribution._
 
 The next step explains how the Eligible investors list is used to distribute the asset among the investors. In this new scenario, Mr. A already received his asset share (x0_final). Other members still have temporary shares, and the diagram below explains the process used to determine Mr. B final share (x1_final). Y is the total asset share: 100%.
 
@@ -710,6 +812,92 @@ The same process is used for Mr. C share calculation. In the case of Mr. C howev
 Throughout the **Finalizer** pallet, a _Notary_ receives **Onboarded** assets information from the **Bidding** pallet, 
 and conducts a deeper off-chain legal investigation: the asset's status then changes from **Onboarded** to **Finalising**. 
 Assets accepted by the _Notary_ receive the status **Finalised**, while others are **Rejected**.
+
+<table>
+<tbody>
+<tr>
+<td>&nbsp;</td>
+<td>Servicer</td>
+<td style={{color:'red'}}>Seller</td>
+<td style={{color:'red'}}>Notary</td>
+<td>Representative</td>
+<td>Investor</td>
+<td>Tenant</td>
+</tr>
+<tr>
+<td colspan="7"><b>Available Fields/Information</b></td>
+</tr>
+<tr>
+<td>account_id</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+</tr>
+<tr>
+<td>age</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+</tr>
+<tr>
+<td>activated</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>✖</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>verifier</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+</tr>
+<tr>
+<td colspan="7"><b>Available Actions</b></td>
+</tr>
+<tr>
+<td>validate_transaction_asset</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>reject_transaction_asset</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>cancel_transaction_asset</td>
+<td>✖</td>
+<td>◎</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+</tr>
+</tbody>
+</table>
+
+_Table 10: Available Information and actions for **Notary** and **Seller** roles in the **Finaliser Pallet**._
+
 
 ## 8) Share Distributor pallet
 
@@ -731,7 +919,129 @@ There are no string attached after receiving the _Tenant_ role in the **Role Pal
 must be used.
 - First and foremost, the **Tenancy Pallet** allows a prospecting _Tenant_ to request a purchased asset. For this purpose, the future _Tenant_ will have to register more informations about himself, and become a prospecting/registered _Tenant_. The asset request notifies the corresponding Representative, who, after evaluation of the _Tenant_ profile, will provide his/her judgement to the asset Owners, and start a referendum for them to take the final decision.
 - Once accepted by a group of owner, the prospecting _Tenant_ can pay the guaranty deposit of the asset, and seal the deal. this action connects him to the asset requested.
-- Finally, the **Tenancy Pallet** allows the _Tenant_ to pay his monthly rent at any moment. The length of the lease contract being 1 year, the _Tenant_ won't be able to do more than 12 payments.  
+- Finally, the **Tenancy Pallet** allows the _Tenant_ to pay his monthly rent at any moment. The length of the lease contract being 1 year, the _Tenant_ won't be able to do more than 12 payments.
+
+<table>
+<tbody>
+<tr>
+<td>&nbsp;</td>
+<td>Servicer</td>
+<td>Seller</td>
+<td>Notary</td>
+<td>Representative</td>
+<td>Investor</td>
+<td style={{color:'red'}}>Tenant</td>
+</tr>
+<tr>
+<td colspan="7"><b>Available Fields/Information</b></td>
+</tr>
+<tr>
+<td>account_id</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+</tr>
+<tr>
+<td>rent</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+</tr>
+<tr>
+<td>age</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+</tr>
+<tr>
+<td>asset_account</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+</tr>
+<tr>
+<td>contract_start</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+</tr>
+<tr>
+<td>remaining_rent</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+</tr>
+<tr>
+<td>remaining_payment</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+</tr>
+<tr>
+<td>registered</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+</tr>
+<tr>
+<td colspan="7"><b>Available Actions</b></td>
+</tr>
+<tr>
+<td>request_asset</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+</tr>
+<tr>
+<td>pay_guaranty_deposit</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+</tr>
+<tr>
+<td>pay_rent</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+</tr>
+</tbody>
+</table>
+
+_Table 11: Available Information and actions for **Tenant** role in the **Tenancy Pallet**._
+
 
 ## 10) Asset Management pallet
 
