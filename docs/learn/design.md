@@ -1170,13 +1170,17 @@ The implemented workflow in this pallet is as follows:
 _Table 12: Available Information and actions for **Representative** and **Investor** roles in the **Asset_Management Pallet**._
 
 1. Election of a **Representative** by the new owners
-   An aspirant **Representative** can request the role through the **Roles Pallet**, and are added to a waiting list. Using the **Asset_Management Pallet**, any owner of any asset can consult the list, and open a referendum for his/her group of owners, in order to elect a **Representative**. An elected **Representative** is connected to the corresponding asset of the owner's group. Note that a **Representative** can be connected to several assets.
+
+   An aspirant **Representative** can request the role through the **Roles Pallet**, and is added to a waiting list. Using the **Asset_Management Pallet**, any owner of any asset can consult the list, and open a referendum for his/her group of owners, in order to elect a **Representative**. An elected **Representative** is connected to the corresponding asset of the owner's group. Note that one **Representative** can be connected to several assets.
 
 2. **Tenant** Selection by Representative & owners
-  Once a **Representative** is connected to an asset, a prospective **Tenant** can send a request for this Asset (see **Tenancy Pallet**). The **Representative** will then evaluate the **Tenant** request, and submit the result of the evaluation together with the **Tenant** information to the _Owners_, while at the same time, opening a referendum for the _Owners_ to vote on this proposal.
+
+   Once a **Representative** is connected to an asset, a prospective **Tenant** can send a request for this Asset (see **Tenancy Pallet**). The **Representative** will then evaluate the **Tenant** request, and submit the result of the evaluation together with the **Tenant** information to the _Owners_, while at the same time, opening a referendum for the _Owners_ to vote on this proposal.
 
 3. Guaranty Deposit payment
-If accepted by the _Owners_ after a referendum, the **Tenant** receives a Guaranty Deposit payment request, sent by the _Owners_ asset's account. Paying the guaranty deposit will seal the agreement, and connect the **Tenant** to the requested asset.
+
+   If accepted by the _Owners_ after a referendum, the **Tenant** receives a Guaranty Deposit payment request, sent by the _Owners_ asset's account. Paying the guaranty deposit will seal the agreement, and connect the **Tenant** to the requested asset.
 
 4. Periodic actions
-Additionally, the **Asset_Management Pallet** will periodically check the payment status of active **Tenants**, and notify them if they are in debts. If a rent has been payed, It will distribute the rent to the _Owners_, after reserving a small percentage for future asset maintenance expenses.   
+
+   Additionally, the **Asset_Management Pallet** will periodically check the payment status of active **Tenants**, and notify them if they are in debts. If a rent has been payed, It will distribute the rent to the _Owners_, after reserving a small percentage for future asset maintenance expenses.
