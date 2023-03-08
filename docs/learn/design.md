@@ -1048,7 +1048,139 @@ _Table 11: Available Information and actions for **Tenant** role in the **Tenanc
 
 The implemented workflow in this pallet is as follows:
 
-1. Election of a _Representative_ by the new owners
-   An aspirant _Representative_ can request the role through the **Roles Pallet**, and are added to a waiting list. Using the **Asset_Management Pallet**, any owner of any asset can consult the list, and open a referendum for his/her group of owners, in order to elect a _Representative_. An elected _Representative_ is connected to the corresponding asset of the owner's group. Note that a _Representative_ can be connected to several assets.
+<table>
+<tbody>
+<tr>
+<td>&nbsp;</td>
+<td>Servicer</td>
+<td>Seller</td>
+<td>Notary</td>
+<td style={{color:'red'}}>Representative</td>
+<td style={{color:'red'}}>Investor</td>
+<td>Tenant</td>
+</tr>
+<tr>
+<td colspan="7"><b>Available Fields/Information</b></td>
+</tr>
+<tr>
+<td>account_id</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+<td>◎</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>activated</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+<td>✖</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>age</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+<td>◎</td>
+</tr>
+<tr>
+<td>asset_account</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+<td>✖</td>
+<td>◎</td>
+</tr>
+<tr>
+<td>index</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+</tr>
+<tr>
+<td>share</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>selections</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>registered</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+</tr>
+<tr>
+<td colspan="7"><b>Available Actions</b></td>
+</tr>
+<tr>
+<td>launch_representative_session</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>owners_vote</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>launch_tenant_session</td>
+<td>✖</td>
+<td>✖</td>
+<td>✖</td>
+<td>◎</td>
+<td>✖</td>
+<td>✖</td>
+</tr>
+</tbody>
+</table>
 
-2.
+_Table 12: Available Information and actions for **Representative** and **Investor** roles in the **Asset_Management Pallet**._
+
+1. Election of a **Representative** by the new owners
+
+   An aspirant **Representative** can request the role through the **Roles Pallet**, and is added to a waiting list. Using the **Asset_Management Pallet**, any owner of any asset can consult the list, and open a referendum for his/her group of owners, in order to elect a **Representative**. An elected **Representative** is connected to the corresponding asset of the owner's group. Note that one **Representative** can be connected to several assets.
+
+2. **Tenant** Selection by Representative & owners
+
+   Once a **Representative** is connected to an asset, a prospective **Tenant** can send a request for this Asset (see **Tenancy Pallet**). The **Representative** will then evaluate the **Tenant** request, and submit the result of the evaluation together with the **Tenant** information to the _Owners_, while at the same time, opening a referendum for the _Owners_ to vote on this proposal.
+
+3. Guaranty Deposit payment
+
+   If accepted by the _Owners_ after a referendum, the **Tenant** receives a Guaranty Deposit payment request, sent by the _Owners_ asset's account. Paying the guaranty deposit will seal the agreement, and connect the **Tenant** to the requested asset.
+
+4. Periodic actions
+
+   Additionally, the **Asset_Management Pallet** will periodically check the payment status of active **Tenants**, and notify them if they are in debts. If a rent has been payed, It will distribute the rent to the _Owners_, after reserving a small percentage for future asset maintenance expenses.
