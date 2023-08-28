@@ -82,7 +82,7 @@ const config = {
           label: 'Website',
           },
           {
-            href: 'https://github.com/fair-squares/fair-squares',
+            href: 'https://github.com/fair-squares',
             label: 'FS GitHub',
             position: 'right',
           },
