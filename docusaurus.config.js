@@ -16,15 +16,17 @@ const config = {
   markdown: {
     mermaid: true,
   },
-  themes: ['@docusaurus/theme-mermaid'],
-  themeConfig: {
-    mermaid: {
-      theme: {light: 'neutral', dark: 'forest'},
-    },
-    prism: {
-      additionalLanguages: ['rust'],
-    },
-  },
+  // themeConfig: {
+  //   image: 'img/FS-light-banner.png',
+  //   mermaid: {
+  //     theme: {light: 'neutral', dark: 'forest'},
+  //   image: 'img/docusaurus.png',
+  //   },
+  //   prism: {
+  //     defaultLanguage: 'rust',
+  //   },
+
+  // },
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -87,6 +89,10 @@ const config = {
             position: 'right',
           },
         ],
+      },
+      image: 'img/FS-light-banner.png',
+      prism: {
+        defaultLanguage: 'rust',
       },
       footer: {
         style: 'light',

@@ -4,29 +4,26 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Learn about the mission and design',
-    // Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'Discover Our Mission and Design Principles',
     description: (
       <>
-        Learn about Fair Squares and the design of the housing cooperation / DAO protocol for equitable housing.
+        Dive deep into Fair Squares: understand the ethos behind our housing cooperation and the intricacies of our DAO protocol, all aimed at fostering equitable housing.
       </>
     ),
   },
   {
-    title: 'Focus on the technology',
-    // Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Discover the Technological Foundation',
     description: (
       <>
-        Fair Squares will be a parachain/thread that allows users to participate in a decentralized and transparent housing cooperative
+        Designed as a specialized parachain/thread, Fair Squares leverages cutting-edge technology to cultivate a transparent, decentralized housing cooperative. Our streamlined back-end is dedicated solely to fostering collaborative housing.
       </>
     ),
-  },
+},
   {
-    title: 'How to participate?',
-    // Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Embarking on Your Journey',
     description: (
       <>
-        Learn how to use the Fair Squares application in guides and tutorials we have published.
+        Navigate your way with ease. Through our extensive guides and tutorials, learn the ins and outs of the Fair Squares application and become a part of the revolution.
       </>
     ),
   },
