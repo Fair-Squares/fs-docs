@@ -31,7 +31,7 @@ export default function Home() {
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      description="Fair Squares is a decentralized, community-owned, and open-source protocol for the collaborative housing with a focus on affordability.<head />">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
