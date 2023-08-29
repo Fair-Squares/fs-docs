@@ -1,5 +1,4 @@
 ---
-hide_table_of_contents: true
 title: Future Stakeholders
 description: Learn about the various stakeholders involved in the Fair Squares ecosystem.
 sidebar_position: 2
