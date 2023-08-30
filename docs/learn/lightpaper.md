@@ -38,7 +38,7 @@ Property ownership under FS relies on consensus by its investors about the inten
 
 ### Decentralized Governance
 
-FS thrives through active community engagement. Our governance structure prioritizes evolving the protocol based on continuous dialogue with FS members. Taking a leaf from Kusama, the FS council comprises experts committed to promoting fair housing practices. Concurrently, FS token holders can participate through the democracy module, influencing decisions and proposals.
+FS thrives through active community engagement. Our governance structure prioritizes evolving the protocol based on continuous dialogue with FS members. The FS council comprises experts committed to promoting fair housing practices. Concurrently, FS token holders can participate through the democracy module, influencing decisions and proposals.
 
 ### Asset Verification
 
