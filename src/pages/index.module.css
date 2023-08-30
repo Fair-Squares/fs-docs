@@ -21,3 +21,16 @@
   align-items: center;
   justify-content: center;
 }
+
+.bannerImage {
+  display: block;
+  max-width: 300px;  /* adjust as per your needs */
+  margin: 0 auto;
+  padding-top: 20px; /* spacing above the logo */
+}
+
+.subtitleBelowLogo {
+  text-align: center;
+  margin-top: 15px; /* adjust spacing above subtitle */
+}
+
