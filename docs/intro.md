@@ -24,24 +24,4 @@ For deeper insights into our initiative or to connect with like-minded individua
 
 We envision Fair Squares not as a traditional business, but as a neutral housing protocol. The protocol's primary objective is to address the core need of housing, aiming to mold this into a universally consistent, predictable, and affordable solution. Revenue generated will be governed by its token holders, stemming from various transactions on the platform.
 
-<!-- ### Governance Structure
-
-We've established a three-tiered governance framework to ensure comprehensive oversight and management:
-
-1. **Economic and Technical Tier:** Covering payment alternatives, KYC integrations, economic parameter changes, protocol updates, and compliance.
-
-2. **Housing Protocol Tier:** Addressing return-on-rent, juror appointments, concerns, and parameter suggestions.
-
-3. **Property Tier:** Focusing on maintenance, liability, insurance, representation, and tenancy agreements.
-
-### Token Distribution
-
-Our utmost priority lies in ensuring fairness in token distribution. Tokens, denoting protocol ownership and governance, will be distributed over an extended period, closely linked to active participation. Their primary function is to oversee governance and represent ownership within the protocol.
-
-To dive deeper, explore our content categories: Learn, Guides, and Build. Navigate using the sidebar. Specifically, you'll find:
-
-- **Light Paper**: Our foundational principles and mission.
-- **Stakeholder Analysis**: An understanding of the ecosystem's key players.
-- **Design and Architecture of Fair Squares**: An in-depth look at our framework. -->
-
 We're glad to have you on this journey towards a more equitable housing future. Welcome aboard!
