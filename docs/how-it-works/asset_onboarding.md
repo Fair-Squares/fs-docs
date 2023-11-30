@@ -44,7 +44,30 @@ The onboarding process is governed by two main bodies:
 
 Asset Onboarding is a key step in ensuring that only the best and most suitable properties make it through our platform. This step maintains the integrity and value of our investments, ensuring that every asset we deal with meets our high standards for quality and affordability.
 
-*Stay tuned for Step 3 in the Fair Squares in 5 Steps series, where we'll delve into the bidding algorithm and investment dynamics.*
+## Diagram
+
+```mermaid
+journey
+    title Asset Onboarding Journey in Fair Squares
+    section Asset Identification
+      Provide Ownership Proof: 5: Seller
+      Bond Capital (0.2% of Asset Price): 4: Seller
+    section Pricing and Governance
+      Set Asset Price: 3: Seller
+      Price Evaluation (If Overpriced, Fee Applied): 2: Seller, Platform
+      Submit for Housing Council Review: 3: Seller
+    section Housing Council Review
+      Housing Council Evaluates Asset: 5: Housing Council
+      Decision Making (Aye or Nay): 3: Housing Council
+    section Investor Voting
+      Asset Put to Investor Vote: 4: Investors
+      Voting Process (66% Majority Required): 5: Investors
+    section Outcome
+      Asset Onboarding Successful: 5: Seller, Investors
+      Asset Rejection (If Failed at Any Stage): 1: Seller, Platform
+```
+
+
 
 ---
 
