@@ -17,17 +17,8 @@ const config = {
   markdown: {
     mermaid: true,
   },
-  // themeConfig: {
-  //   image: 'img/FS-light-banner.png',
-  //   mermaid: {
-  //     theme: {light: 'neutral', dark: 'forest'},
-  //   image: 'img/docusaurus.png',
-  //   },
-  //   prism: {
-  //     defaultLanguage: 'rust',
-  //   },
+  themes: ['@docusaurus/theme-mermaid'],
 
-  // },
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
