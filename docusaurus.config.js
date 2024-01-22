@@ -82,6 +82,9 @@ const config = {
           },
         ],
       },
+      mermaid: {
+        theme: {light: 'neutral', dark: 'forest'},
+      },
       image: 'img/FS-light-banner.png',
       prism: {
         defaultLanguage: 'rust',

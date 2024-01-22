@@ -64,13 +64,6 @@ sidebar_position: 2
 | **Cons** | - Integration challenges with new digital tools and platforms.<br/>- Need to develop new protocols for handling fractional ownership.<br/>- Potential increase in workload if fractional ownership becomes popular. | - Processes can be slow and bureaucratic.<br/>- Paper-heavy systems might be prone to errors and inefficiencies.<br/>- Possible resistance to technological innovation and modernization. |
 
 
-### **Housing Market**
-
-| Aspect | Fair Squares | Traditional Housing System |
-| ------ | ------------ | -------------------------- |
-| **Pros** | - Increased participation can boost overall activity.<br/>- Fractional ownership can stabilize prices by reducing speculative bubbles.<br/>- New financing models and liquidity. | - Proven stability and track record.<br/>- Existing regulatory frameworks.<br/>- Familiarity and trust among the general public. |
-| **Cons** | - Risk of market fragmentation.<br/>- Over-reliance on technology can lead to vulnerabilities.<br/>- Uncertain long-term impact on property values. | - Susceptibility to housing bubbles.<br/>- Barriers to entry for new homeowners due to high prices.<br/>- Slower adoption of technological innovations. |
-
 ### **Regulators**
 
 | Aspect | Fair Squares | Traditional Housing System |
