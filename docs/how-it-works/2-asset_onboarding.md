@@ -31,60 +31,63 @@ flowchart TD
     style H fill:#34f9a4,stroke:#333,stroke-width:2px
 ```
 
-### Governance in Asset Onboarding
 
-The onboarding process is governed by two main bodies. It starts with the housing council and from there on it goes on to the investor voting. 
+## Governance in Asset Onboarding
 
-#### The Housing Council
+The onboarding process is governed by two main bodies, once there is an asset that is trying to be onboarded the following governance bodies will start deciding if this asset should be onboarded. In the following two paragraphs we unfold how the two governance bodies onboard an asset and what their motives are. 
 
-- **Role**: The Housing Council, composed of publicly elected individuals or organizations, plays a pivotal role. They focus on affordable housing and assess whether the asset meets specific criteria.
+### The Housing Council
 
-- **Criteria Considered**:
-  - Location (urban areas preferred)
-  - Energy efficiency 
+**Role**: The Housing Council, composed of publicly elected individuals or organizations play a pivotal role. The are the first line where an asset passes through. Their focus is to achieve an affordable housing environment with the right variables, that come from different background and want to further advance the Fair Squares DAO. This vision will be further backed by a handbook where the focus of the DAO is.
+
+**Criteria considered by the housing council**:
+  - Location of an asset, urban areas preferred might be preferred as this is where most of the increased house prices exsist. 
+  - Energy efficiency, it's good to have a 
   - Condition of the property (good or bad state)
-  - Additional factors relevant to housing quality
-  - Complete history of maintenance
+  - Additional factors relevant to housing quality (environment, accessibility)
+  - Taxation report and technical. 
 
-- **Decision Making**:  Council members vote 'Aye' or 'Nay' on each housing proposal. Their decision influences whether an asset progresses to the next stage.
+  The council is not expected to find out every bit of the asset, the main goal is to find out if it's fits within the search bandwidth of the asset in the Fair Squares community and if the house would be plenty of demand. IF the guidelines up are followed through this will be the case. 
 
-### Investor Voting
+**Decision**:  Council members vote 'Aye' or 'Nay' on each housing proposal. Their decision influences whether an asset progresses to the next stage which is the investors vote. 
 
-- **Participant's Role**: Investors who have bonded their money in the Housing Fund also get a say. Their vote is crucial as they are potential future co-owners of these assets.
+```mermaid
+flowchart LR
+    A[Asset Submission] --> B[Housing Council Review]
+    B -->|Assess Criteria| C[Criteria Evaluation]
+    C --> D{Council Voting}
+    D -->|Aye| E[Proceed to Investor Vote]
+    D -->|Nay| F[Rejection]
+    
+    B -->|Focus on Affordable Housing| B
+    C -->|Location, Energy, Condition, etc.| C
 
-- **Voting Threshold**: For an asset to be successfully onboarded, it must receive a majority vote of 66% from the investors.
+```
 
-- **Outcome**: If the asset passes this voting stage, it gains the status of 'Onboarded', ready to advance to the next step in the process.
+### Investors vote
+
+Comes after the housing council vote if it passes and they decide on the final step if an asset get's onboarded. They differ from the housing council as they are the users that have put up the capital on Fair Squares to invest already in and are using now their voting rights to further decide if an asset should be onboarded on Fair Squares. 
+
+**Role**: The expectation of an investor is to look at an asset from the pov of risk and reward. A real estate investor can look from different angles than the housing council will look at it and they decide. We goal is to let any investor invest and participate in the vote who has the role of an investor. We want investors to look at the monetary side mainly since the housing council will have judged it on the housing quality and right fit for the values of assets we are looking for in the DAO. The crucial part that makes the difference in this vote is that no investors know's with certainty upfront their capital will be used to pay for the onboarded asset. 
+
+**Voting Threshold**: Is not fully fleshed out how we expect to advance with the investors vote. We are aiming not to give the people with more capital more voting rights since it may lead to unfavourable voting standards, but also we don't aim to implement something that passes too hard or easy. We can learn many lessons from the [OpenGov tracks](https://wiki.polkadot.network/docs/learn-polkadot-opengov-origins#root) and implement similar voting standards for the investors vote, but this is still in research phase. 
+
+**Decision**: If the asset passes this voting stage, it gains the status of **onboarded**, ready to advance to the next step in the process, which is the bidding phase and is dealt with just in the runtime. This is why onboarding assets is crucial and we need two governance bodies to onboard an asset. 
+
+```mermaid
+flowchart LR
+    A[Passes Housing Council Vote] --> B[Investor Voting Review]
+    B -->|Risk & Reward Assessment| C[Investor Evaluation]
+    C --> D{Investor Voting}
+    D -->|Pass| E[Asset Onboarded]
+    D -->|Fail| F[Rejection]
+    
+    B -->|Monetary Focus| B
+    C -->|Diverse Investor Perspectives| C
+```
 
 ## Conclusion
 
-Asset Onboarding is a key step in ensuring that only the best and most suitable properties make it through our platform. This step maintains the integrity and value of our investments, ensuring that every asset we deal with meets our high standards for quality and affordability.
+Asset Onboarding process is a key step in ensuring that only the best and most suitable properties make it through the platform. This step maintains the integrity and value of our community while ensure we have assets available for potential tenants. 
 
-## Diagram
-
-```mermaid
-journey
-    title Asset Onboarding Journey in Fair Squares
-    section Asset Identification
-      Provide Ownership Proof: 5: Seller
-      Bond Capital (0.2% of Asset Price): 4: Seller
-    section Pricing and Governance
-      Set Asset Price: 3: Seller
-      Price Evaluation (If Overpriced, Fee Applied): 2: Seller, Platform
-      Submit for Housing Council Review: 3: Seller
-    section Housing Council Review
-      Housing Council Evaluates Asset: 5: Housing Council
-      Decision Making (Aye or Nay): 3: Housing Council
-    section Investor Voting
-      Asset Put to Investor Vote: 4: Investors
-      Voting Process (66% Majority Required): 5: Investors
-    section Outcome
-      Asset Onboarding Successful: 5: Seller, Investors
-      Asset Rejection (If Failed at Any Stage): 1: Seller, Platform
-```
-
-
-
----
-
-*Note: This is page 2 of the "Fair Squares in 5 Steps" series.*
+By incorporating thorough evaluations by the Housing Council and investor votes, it ensures that only properties meeting the highest standards are selected. This dual-governance approach balances the needs for housing quality with financial viability, maintaining the integrity of investments and aligning with the DAO's mission for accessible housing. Through this rigorous process, Fair Squares maintains its commitment to offering valuable and affordable assets to its community.
