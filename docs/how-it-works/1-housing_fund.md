@@ -1,4 +1,4 @@
-# The Housing Fund (1)
+# The Housing Fund - 1
 
 
 The first step in our journey towards collaborative and affordable housing involves establishing a robust **Housing Fund**. This fund plays a pivotal role in pooling resources and directing them towards investments in housing assets. 

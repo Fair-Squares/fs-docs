@@ -1,4 +1,4 @@
-# Asset Onboarding (2)
+# Asset Onboarding - 2
 
 Following the Housing Fund, the next step is **Asset Onboarding**. This process involves safely onboarding properties into Fair Squares. It's developed to  onboard assets that the majority of stake holders of the protocol want. It's a crucial phase where assets become part of the protocol and we require governance participation on which asset that will be. We require stake-holders to discuss and proof why a certain assets fits within the Fair Squares protocol. There will be a mandate from the DAO to optimize good affordable houses in urban areas. We need people to judge on those values since only those specific assets will advance the mission of the FS community. 
 
