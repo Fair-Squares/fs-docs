@@ -73,7 +73,29 @@ All stakeholders contribute to FS's evolution. As we craft pilot models for sust
 ## How Fair Squares Operates
 
 ### FS Architecture
-![Architecture FS main flow](/img/architecture-fs-process.png)
+```mermaid
+flowchart LR
+	subgraph Proposal
+		A[Seller Submits Proposal]\nOnboarding
+		B[Council Review]\nVoting Phase 1
+	end
+	subgraph Investment
+		C[Investor Vote]\nVoting Phase 2
+		D[Housing Fund Allocation]
+	end
+	subgraph Ownership
+		E[Ownership Token Mint]\nShare Distributor
+		F[Representative Election]\nAsset Mgmt
+	end
+	subgraph Tenancy
+		G[Tenant Application]\nTenancy
+		H[Lease & Rent Distribution]
+	end
+
+	A --> B --> C --> D --> E --> F --> G --> H
+```
+
+_Mermaid diagram replaces prior static image – see `technology/architecture.md` for layered variant._
 
 ### Funding Framework
 

@@ -5,55 +5,87 @@
  */
 
 /* You can override the default Infima variables here. */
+/* Harmonized color palette with main site (website-v2) */
 :root {
-  --ifm-color-primary: #3aa6a3; /* turquoise */
-  --ifm-color-secondary: #c00c63; /* magenta */
+  /* Core brand */
+  --ifm-color-primary: #30a397; /* deepTurquoise */
+  --ifm-color-primary-dark: #278b81;
+  --ifm-color-primary-darker: #1e736a;
+  --ifm-color-primary-darkest: #155b53;
+  --ifm-color-primary-light: #43b2a6;
+  --ifm-color-primary-lighter: #56c1b5;
+  --ifm-color-primary-lightest: #69d0c4;
 
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-secondary-dark: #b41673; 
+  /* Accent + neutrals mapped */
+  --ifm-color-secondary: #6e594b; /* naturalBrown */
+  --ifm-color-secondary-dark: #5b493e;
+  --ifm-color-secondary-darker: #4a3b32;
+  --ifm-color-secondary-darkest: #3a2e26;
+  --ifm-color-secondary-light: #856d5d;
+  --ifm-color-secondary-lighter: #9c8273;
+  --ifm-color-secondary-lightest: #b3988a;
 
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-secondary-darker: #a01266; 
+  /* Support colors (Soft creams, turquoise spectrum) */
+  --fs-soft-cream: #fdfbf7;
+  --fs-warm-gray: #f4f2ed;
+  --fs-mild-turquoise: #385f5b;
+  --fs-light-turquoise: #c4e3df;
+  --fs-turquoise: #40e0d0;
 
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-secondary-darkest: #8f0e59; 
-
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-secondary-light: #c00c63; 
-
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-secondary-lighter: #ef52ad; 
-
-  --ifm-color-primary-lightest: #3cad6e;
-  --ifm-color-secondary-lightest: #fa70c8; 
-
+  --ifm-background-color: var(--fs-soft-cream);
+  --ifm-background-surface-color: #ffffff;
+  --ifm-heading-color: var(--fs-mild-turquoise);
+  --ifm-font-color-base: var(--ifm-color-secondary);
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --docusaurus-highlighted-code-line-bg: rgba(48,163,151,0.08);
+
+  /* Diagrams */
+  --fs-diagram-node-bg: #ffffff;
+  --fs-diagram-node-border: #30a397;
+  --fs-diagram-accent: #6e594b;
 }
 
-/* Dark mode colors */
 [data-theme='dark'] {
-  --ifm-color-primary: #3aa6a3;
-  --ifm-color-secondary: #c00c63; 
+  --ifm-color-primary: #30a397;
+  --ifm-color-primary-dark: #278b81;
+  --ifm-color-primary-darker: #1e736a;
+  --ifm-color-primary-darkest: #155b53;
+  --ifm-color-primary-light: #43b2a6;
+  --ifm-color-primary-lighter: #56c1b5;
+  --ifm-color-primary-lightest: #69d0c4;
 
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-secondary-dark: #c00c63; 
-
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-secondary-darker: #c81e93; 
-
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-secondary-darkest: #b41673; 
-
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-secondary-light: #f05eb3; 
-
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-secondary-lighter: #fa70c8; 
-
-  --ifm-color-primary-lightest: #4fddbf;
-  --ifm-color-secondary-lightest: #ff8cdd; 
-
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-secondary: #d4cbc5;
+  --ifm-background-color: #1d2625;
+  --ifm-background-surface-color: #23312f;
+  --ifm-heading-color: #69d0c4;
+  --ifm-font-color-base: #e6e0dc;
+  --docusaurus-highlighted-code-line-bg: rgba(255,255,255,0.08);
+  --fs-diagram-node-bg: #23312f;
+  --fs-diagram-node-border: #69d0c4;
+  --fs-diagram-accent: #d4cbc5;
 }
+
+/* Mermaid tweaks */
+pre.mermaid, .mermaid { background: transparent !important; }
+.diagram-legend { font-size: .85rem; background: var(--ifm-background-surface-color); padding: .5rem .75rem; border:1px solid var(--ifm-color-primary); border-radius:6px; }
+
+/* Cards / surfaces */
+.fs-surface {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid rgba(48,163,151,0.2);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 4px 10px -2px rgba(0,0,0,0.05);
+}
+
+/* Subtle table overflow handling */
+.markdown table { display: block; overflow-x: auto; }
+
+/* Homepage banner adjustments if reused */
+.hero--primary { background: linear-gradient(135deg,#f4f2ed 0%,#c4e3df 60%,#30a397 120%); color: var(--ifm-color-secondary); }
+
+/* Footer styling sync */
+footer.footer { background: var(--fs-warm-gray); color: var(--ifm-color-secondary); }
+footer.footer a { color: var(--ifm-color-primary); }
+footer.footer a:hover { color: var(--ifm-color-primary-light); }
 
