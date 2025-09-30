@@ -1,1186 +1,157 @@
 ---
 sidebar_position: 2
-date: 2022-12-26T18:00
+date: 2025-09-29T12:00
+title: Detailed Design (Pooled Asset Model)
+description: Deep-dive into Fair Squares pallets, pooled NAV flow, governance tracks and off-chain operational integration.
 ---
-
-# Fair Squares Design & Architecture
-
-This section explains the mechanics of each Fair Squares pallet and runtime. A scenario derived from the testing guide is used to make the explanation easier to understand.
-** The descriptions given reflect the current stage of development, and will be subject to changes in the future.**
-The focus will be on user experience and future investors, for this reason, some technical aspects might be ignored.
 
 import TOCInline from '@theme/TOCInline';
 
+# Fair Squares Design & Architecture (Updated)
+
+This document supersedes the earlier per‑asset (NFT + Share Distributor + Bidding + Tenancy) model. Assets now enter a pooled structure: investors hold fungible pool units; units are minted when new, validated assets are acquired and burned only on divestment or impairment. Governance migrated to Polkadot OpenGov tracks, and direct tenancy is outsourced to accredited housing corporations.
+
 <TOCInline toc={toc} />
 
-## 1) Characters
+## 1. Role & Actor Overview
 
-The roles are distributed as follows: 1 Servicer, 1 Seller, 1 Notary, 1 Representative applicant, 2 dummy Representatives (set by default), 2 Tenant applicants, and 8 Investors. For more details on each character, see _Table 1_ below.
+On‑chain roles: Servicer, Seller, Notary, Investor. (Representative is legacy, replaced operationally by accredited Housing Corporations.)
 
-| Name         | Role                                  | Contribution to the Fair Squares Fund |
-| ------------ | ------------------------------------- | ------------------------------------- |
-| Alice        | Servicer/Council_member/Administrator | None                                  |
-| Bob          | Seller/Council_member                 | None                                  |
-| Charlie      | Notary/Council_member                 | None                                  |
-| Dave         | Representative (Applicant)            | None                                  |
-| Henry        | Representative (No Asset)             | None                                  |
-| Gabriel      | Representative (No Asset)             | None                                  |
-| Eve          | Tenant (Applicant)                    | None                                  |
-| Ferdie       | Tenant (Applicant)                    | None                                  |
-| KillMonger   | Investor                              | $6,000,000                            |
-| Aluman       | Investor                              | $9,000,000                            |
-| Shikamaru    | Investor                              | $3,500,000                            |
-| Geraldo      | Investor                              | $8,000,000                            |
-| Obito        | Investor                              | $5,000,000                            |
-| Hans         | Investor                              | $7,000,000                            |
-| Alice//stash | Investor                              | $3,000,000                            |
-| Bob//stash   | Investor                              | $2,000,000                            |
+Hybrid / off‑chain: Valuation Providers, Housing Corporations, OpenGov Participants (voters / delegates).
 
-_Table 1: Description of the different characters._
+## 2. Pallet / Module Set
 
-## 2) Roles Pallet
+| Domain | Component | Purpose | Outputs |
+|--------|-----------|---------|---------|
+| Access | Roles | Identity + role gating | RoleAccount |
+| Capital | Housing Fund | Bonded capital accounting | FundContribution |
+| Intake | Onboarding | Proposal registry + metadata hash | Proposal states |
+| Valuation | Off-chain layer | Aggregated appraisals | Value band data |
+| Legal | Finalizer | Title & compliance checks | InclusionApproval / Rejection |
+| Pool | Asset Pool Engine | NAV + unit supply mgmt | PoolUnit, nav_per_unit |
+| Governance | OpenGov Integration | Track mapping & gating | Referenda outcomes |
+| Ops | Monitoring / Metrics | Occupancy & NOI ingestion | MetricReport events |
 
-The first step in the workflow is to set roles using the `Roles` pallet. Users use the `set_role` function to apply to the role they want:
+## 3. High-Level Lifecycle
 
-- **Investors** & **Tenants** get the role right away.
-- **Seller**/**Notary**/**Servicer**/**Representative**
-
-  They need to go through an approval that varies with the requested role. Their request is therefore sent to a waiting list first.
-
-- **Administrator** & **Council member** are attributed by default and are not completely managed by the `Roles` pallet.
-
-  We will refer to them as special roles, and other roles will be referred to as standard roles. In a production environment, these will be appointed with governance. Each user can only have one standard role.
-
-- The maximum number of roles that can be attributed is currently fixed at 200.
-
-- Alice, as the platform administrator, possesses the **Servicer** role by default.
-
-  As a servicer, her role is to **review**, **approve** or **reject** **Seller**, **Servicer** and **Notary** role requests by using the `account_approval` and/or `account_rejection` functions.
-
-  She can also transfer her **Administrator** role to someone else (she will then lose it) by using the `set_manager` function.
-
-In _Table 2_, we give an overview of the information & actions linked to each role. The **Available actions** section of this table will be updated for each pallet:
-
-<table>
-  <tr>
-   <td>
-   </td>
-   <td style={{color:'red'}}>Servicer</td>
-   <td style={{color:'red'}}>Seller</td>
-   <td style={{color:'red'}}>Notary</td>
-   <td style={{color:'red'}}>Representative</td>
-   <td style={{color:'red'}}>Investor</td>
-   <td style={{color:'red'}}>Tenant</td>
-  </tr>
-  <tr>
-   <td colspan="7" ><b>Available Fields/Information</b></td>
-  </tr>
-  <tr>
-   <td>account_id</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-  </tr>
-  <tr>
-   <td>age</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-  </tr>
-  <tr>
-   <td>activated</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>✖</td>
-   <td>✖</td>
-  </tr>
-  <tr>
-   <td>verifier</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-  </tr>
-  <tr>
-   <td>assets_accounts</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-  </tr>
-  <tr>
-   <td>rent</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>◎</td>
-  </tr>
-  <tr>
-   <td colspan="7" ><b>Available Actions</b></td>
-  </tr>
-  <tr>
-   <td>Approve/Reject  a role request</td>
-   <td>◎</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-  </tr>
-  <tr>
-   <td>Set a role</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-  </tr>
-  <tr>
-   <td>Waiting List</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>✖</td>
-   <td>✖</td>
-  </tr>
-</table>
-
-_Table 2: Available Information and actions for each role in the **Roles** pallet._
-
-Finally, according to the rules described so far, users request and receive their roles, in order to reach the distribution shown in _Table 1_.
-
-Time to move to the next pallet: **Housing Fund**.
-
-## 3) Housing Fund Pallet
-
-In the second step, investors use the **Housing Fund** pallet to contribute to assets.
-
-<table>
-<tbody>
-<tr>
-<td>&nbsp;</td>
-<td>Servicer</td>
-<td>Seller</td>
-<td>Notary</td>
-<td>Representative</td>
-<td style={{color:'red'}}>Investor</td>
-<td>Tenant</td>
-</tr>
-<tr>
-<td colspan="7"><b>Available Fields/Information</b></td>
-</tr>
-<tr>
-<td>account_id</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>age</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>activated</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>verifier</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>assets_accounts</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>rent</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-</tr>
-<tr>
-<td colspan="7"><b>Available Actions</b></td>
-</tr>
-<tr>
-<td>Contribute to the fund</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>Withdraw from the fund</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-<td>✖</td>
-</tr>
-</tbody>
-</table>
-
-_Table 3: Available Information and actions for each role in the **Housing Fund** pallet._
-
-The following conditions apply to fund contribution:
-
-- Minimum contribution of $5000.
-- Maximum Contribution of $20,000 (Not in use at the moment).
-- Fund Threshold of $100,000 (Not in use at the moment).
-
-All information relative to fund contributions are stored in the **Housing Fund** pallet, and are available for other pallets to use. For this reason, the **Housing Fund** pallet, as well as the **Roles** pallet will be mentioned in the explanation of several other pallets.
-
-## 4) Onboarding Pallet & NFT Pallet
-
-Onboarding & NFT pallets are tightly coupled pallets and it would be very difficult to explain the contents of one without the other.
-
-Now that we have money in the housing fund, Bob the **Seller** will create a proposal using the **Onboarding** Pallet. This pallet is tightly coupled with the **NFT** pallet, and allows **Seller**s to fulfill the following tasks:
-
-#### _a) Create an asset sale proposal_
-
-Here, through the use of the `create_and_submit_proposal` the Seller selects between different classes of assets (Houses, Apartment complex, Offices, etc...) provided by the NFT pallet, and defines the price, name, additional information describing the asset (metadata), before creating it. The **NFT** pallet is then used to create an asset sale proposal that will be transferred to the **Voting** pallet if submitted by the seller/NFT minter.
-
-Only **Seller**s have the authority to create an asset.
-
-In the background, an NFT is minted at asset creation by the **NFT** pallet (in other words the seller has authority on minting a new NFT), using the information provided by the seller. This NFT is also given an ID connected to its asset class. Submitting the asset or not after creation is among the choices offered to the seller, as a modifiable parameter.
-
-#### _b) Modify asset specifications before submission_
-
-It is possible to create an asset, without immediately submitting it for a review by the **House Council** (see the **Voting** pallet). In this case, the seller might want to modify the asset’s metadata, or add it: the right to set/modify data is also defined in the **NFT** pallet and is provided to **Seller**s.
-
-After creation, the asset can be submitted for review to the **House Council**, before being transferred to **Investor**s for a vote (**Voting** pallet).
-
-The **Onboarding** pallet also introduces the concept of `asset status` (**EDITING**, **REVIEWING**, **ONBOARDED**, **FINALIZING**, **FINALIZED**, **REJECTED**), which describes the position of the asset in the **Fair Squares** workflow.
-
-<table>
-<tbody>
-<tr>
-<td>&nbsp;</td>
-<td style={{color:'red'}}>Servicer</td>
-<td style={{color:'red'}}>Seller</td>
-<td>Notary</td>
-<td>Representative</td>
-<td>Investor</td>
-<td>Tenant</td>
-</tr>
-<tr>
-<td colspan="7"><b>Available Fields/Information</b></td>
-</tr>
-<tr>
-<td>account_id</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>age</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>activated</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>verifier</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>assets_accounts</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>rent</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-</tr>
-<tr>
-<td colspan="7"><b>Available Actions</b></td>
-</tr>
-<tr>
-<td>create_and_submit_proposal</td>
-<td>✖</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>submit_awaiting</td>
-<td>✖</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>reject_edit</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>reject_destroy</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>change_status</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-</tbody>
-</table>
-
-_Table 4: Available Information and actions for **Servicer** and **Seller** roles in the **Onboarding Pallet**._
-
-You can also see in _Table 4_ that the **Onboarding** pallet allows a **Servicer** to reject an asset proposal for editing or destruction, depending on the case at hand. From the **NFT** pallet side, this means editing the NFT’s metadata, or burning the NFT. Some of the main functions of the **NFT** pallet are shown in _Table 5_.
-
-Creation & submission of a proposal is not free of charge for the **Seller**: a proposal fee, which represents 10% of the asset price (configurable), is reserved at creation of the proposal, and slashed if the proposal is destroyed. If rejected for editing, only 10% of the reserved fees are slashed, and if accepted, remaining reserved fees are returned.
-
-<table>
-<tbody>
-<tr>
-<td>&nbsp;</td>
-<td style={{color:'red'}}>Servicer</td>
-<td style={{color:'red'}}>Seller</td>
-<td>Notary</td>
-<td>Representative</td>
-<td>Investor</td>
-<td>Tenant</td>
-</tr>
-<tr>
-<td colspan="7"><b>Available Fields/Information</b></td>
-</tr>
-<tr>
-<td>account_id</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>age</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>activated</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>verifier</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>assets_accounts</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>rent</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-</tr>
-<tr>
-<td colspan="7"><b>Available Actions</b></td>
-</tr>
-<tr>
-<td>create_collection</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>mint</td>
-<td>✖</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>transfer*</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>burn</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>destroy_collection</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-</tbody>
-</table>
-
-_Table 5: Available Information and actions for **Servicer** and **Seller** roles in the in the **NFT Pallet**._
-
-## 5) Voting pallet
-
-<table>
-  <tr>
-   <td>
-   </td>
-   <td>Servicer</td>
-   <td style={{color:'red'}}>Seller</td>
-   <td>Notary</td>
-   <td>Representative</td>
-   <td style={{color:'red'}}>Investor</td>
-   <td>Tenant</td>
-  </tr>
-  <tr>
-   <td colspan="7" ><b>Available Fields/Information</b></td>
-  </tr>
-  <tr>
-   <td>account_id</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-  </tr>
-  <tr>
-   <td>age</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-  </tr>
-  <tr>
-   <td>activated</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>✖</td>
-   <td>✖</td>
-  </tr>
-  <tr>
-   <td>verifier</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-  </tr>
-  <tr>
-   <td>assets_accounts</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>◎</td>
-   <td>◎</td>
-   <td>◎</td>
-  </tr>
-  <tr>
-   <td>rent</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>◎</td>
-  </tr>
-  <tr>
-   <td colspan="7" ><b>Available Actions</b></td>
-  </tr>
-  <tr>
-   <td>council_vote</td>
-   <td>◎</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-  </tr>
-  <tr>
-   <td>council_close_vote</td>
-   <td>◎</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-  </tr>
-  <tr>
-   <td>investor_vote</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>✖</td>
-   <td>◎</td>
-   <td>✖</td>
-  </tr>
-</table>
-
-_Table 6: Available Information and actions for **Seller** and **Investor** roles in the **Voting pallet**._
-
-This is the governance system used to decide if an asset is valid for purchase or not. It is composed of two phases:
-
-- The council conducts the first review of an asset proposal created by a **Seller**, in order to spot any irregularities, and conducts a vote.
-
-  Composition of the council still has to be clarified (real estate professional, lawyer, community members, Fair Squares team members, etc.). At this stage, the asset might be rejected for editing if a minor compliance problem is detected, or rejected for destruction, if the asset specifications, or the Seller are in violation of the terms of **Fair Squares** platform.
-
-- If approved by the council, the asset’s proposal is transferred to an Investors' vote session. Investors decide through a vote if they want their **Fair Squares** fund to invest in this asset, and eventually become one of the co-owners (if selected by the FS algorithm) of this asset.
-
-A summary of the proposal submission workflow is shown in _Figure 1_ below.
+The end-to-end flow below shows how an asset progresses from proposal intake to pooled NAV impact, and how external operational metrics feed back into valuation updates.
 
 ```mermaid
-flowchart LR;
- subgraph S0[<font size=5>Seller Asset_status:\nEditing]
-    A(<font size=5>Mint/Edit an \nNFT);
-
-        end
-
-    subgraph S1[<font size=5>System Asset_status:\nEditing]
-    subgraph Title1[ ]
-    subgraph T1[ ]
-    B(<font size=5>Create an \nAsset proposal);
-    end
-    end
-    end
-
-    subgraph S2[<font size=5,style=bold>Seller Asset_status:\nEditing]
-    subgraph Title2[ ]
-    subgraph T2[ ]
-    C(<font size=5>Submit proposal for Review);
-    end
-    end
-    end
-
-    subgraph S3[<font size=6>System Asset_status:\nReviewing]
-    subgraph Title3[ ]
-    D(<font size=5>Create a Council referendum);
-    end
-    end
-
-    subgraph S4[<font size=5>Council Asset_status:\nReviewing]
-    subgraph Title4[ ]
-    subgraph T3[ ]
-    E0(<font size=5>Approve);
-    F0(<font size=5>Reject);
-    end
-    end
-    end
-
-    subgraph S5[<font size=5>System Asset status:\nVoting or Rejected]
-    subgraph Title5[ ]
-    G(<font size=5>Create an Investor \nreferendum);
-    H0(<font size=5>Edit);
-    I0(<font size=5>Destroy);
-    end
-    end
-
-    subgraph S6[<font size=5>Investors Asset_status:\nVoting or Rejected]
-    subgraph Title6[ ]
-    subgraph T4[ ]
-    E1(<font size=5>Approve);
-    F1(<font size=5>Reject);
-    end
-    end
-    end
-
-    subgraph S7[<font size=7>System \nAsset_status: Voting or Rejected];
-    J(<font size=6>Onboard \nAsset);
-    H1(<font size=6>Edit);
-    I1(<font size=6>Destroy);
-    end
-
-    A --> B;
-    B --> C;
-    C --> D;
-    D --> E0;
-    D --> F0;
-    E0 --> G;
-    F0 --> H0;
-    F0 --> I0;
-    H0 -.-> A;
-    G --> E1;
-    G --> F1;
-    E1 --> J;
-    F1 --> H1;
-    F1 -->I1;
-    H1 -.-> A;
-
-    classDef Title fill:none,stroke:none;
-    class Title1,Title2,Title3,Title4,Title5,Title6,T1,T2,T3,T4 Title
-    classDef style0 fill:#FFB833,stroke-dasharray: 5 5,stroke-width:2px,text-align:center;
-    class S0,S1,S2,S3,S4,S5,S6,S7 style0
-
+---
+config:
+  layout: elk
+---
+flowchart TD
+   subgraph Intake
+      P[Proposal Created]<-- Seller -->S(Seller Docs)
+      VQ[Valuation Requests]
+   end
+   subgraph Validation
+      VA[Appraisals Aggregated]
+      LG[Legal Checks]
+   end
+   subgraph Gov[OpenGov]
+      T1[Asset Admission Track]
+   end
+   subgraph Pool
+      ACQ[Capital Allocation]
+      MINT[Mint Units]
+      NAV[NAV Update]
+   end
+   subgraph Ops[External Ops]
+      HC[Housing Corp]
+      MET[NOI Metrics]
+   end
+   P --> VQ --> VA --> LG --> T1 --> ACQ --> MINT --> NAV
+   HC --> MET --> NAV
+   Investor[(Investors)] --> ACQ
+   Fund[(Housing Fund)] --> ACQ
 ```
 
-_Figure 1 - Proposal submission workflow. This workflow only shows the tasks performed by the **NFT**, **Onboarding**, and **Voting** pallets._
+## 4. Capital Allocation & Unit Mint (Diagram)
 
-## 6) Bidding pallet
+```mermaid
+---
+config:
+   layout: elk
+---
+flowchart TD
+   A[Validated Asset] --> B{Fund liquidity >= price?}
+   B -->|No| Q[Queue]
+   B -->|Yes| C[Allocate capital]
+   C --> D[Compute issue]
+   D --> E[Mint units]
+   E --> F[Update NAV]
+   F --> G[Recalc NAV per unit]
+   G --> H[Emit inclusion events]
+```
 
-The **Bidding** pallet regularly scans the chain, looking for **ONBOARDED** assets, and executes the following tasks when one is found:
+## 5. Finalization & Governance Confirmation
 
-- Check that the **Housing Fund** has enough funds to purchase the asset.
-- Generate a list of investors for the asset.
+```mermaid
+---
+config:
+   layout: elk
+---
+flowchart LR
+   P[Proposal] --> V[Valuations Aggregated]
+   V --> L[Legal Checks Pass]
+   L --> R[OpenGov Referendum]
+   R -->|Approve| A[Allocation Phase]
+   R -->|Reject| X[Archive]
+   A --> F[Final Settlement]
+   F --> INC[Pool Inclusion]
+   INC --> NAV[NAV + Units Update]
+   style X fill:#faa,stroke:#c33
+```
 
-Generating a list of investors is a core functionality of **Fair Squares**, and is obeying the following conditions (configurable):
 
-- The maximum asset share per investor is 40%
-- The minimum asset share per investor is 5%
 
-Through the use of a **First Come First Serve** principle, the bidding pallet creates an owners list as described in _Table 6_ below:
+## 6. Investor Contribution Example (Normalized Names)
 
-|  INVESTORS   | Contribution age (in blocks) | Contribution to the fund | INVESTOR Share in the Housing Fund (%) |
-| :----------: | :--------------------------: | :----------------------: | :------------------------------------: |
-|  KillMonger  |              55              |      $6,000,000.00       |                  13.8                  |
-|    Aluman    |              54              |      $9,000,000.00       |                  20.7                  |
-|  Shikamaru   |              53              |      $3,500,000.00       |                  8.0                   |
-|   Geraldo    |              52              |      $8,000,000.00       |                  18.4                  |
-|    Obito     |              51              |      $5,000,000.00       |                  11.5                  |
-|     Hans     |              50              |      $7,000,000.00       |                  16.1                  |
-| Alice//stash |              49              |      $3,000,000.00       |                  6.9                   |
-|  Bob//stash  |              48              |      $2,000,000.00       |                  4.6                   |
+```mermaid
+---
+config:
+   layout: elk
+---
+flowchart LR
+   subgraph FundContrib[Housing Fund Contributions]
+   Alice[Alice<br/>$6.0M]
+   Bob[Bob<br/>$9.0M]
+   Carol[Carol<br/>$3.5M]
+   David[David<br/>$8.0M]
+   Emma[Emma<br/>$5.0M]
+   Frank[Frank<br/>$7.0M]
+   Grace[Grace<br/>$3.0M]
+   Henry[Henry<br/>$2.0M]
+   end
+   Asset[Target Asset<br/>Price $10M]
+   FundContrib --> Asset
+   Asset --> Dist{Pro-Rata Allocation<br/>& Cap Rules}
+   Dist --> Mint[Pool Unit Mint]
+   Mint --> NAV[NAV / Unit Update]
+   classDef alloc fill:#cfe,stroke:#080
+   class Mint,NAV alloc
+```
 
-_Table 7: shares & contributions._
+## 7. Metrics & Safeguards Overview
 
-In this example, we will consider an asset with a price of 10 million US dollars. _Table 8_ shows a brief recap of the scenario's general configuration :
-
-|                 | USD         | %   |
-| --------------- | ----------- | --- |
-| Housing Fund    | $43,500,000 | -   |
-| Asset price     | $10,000,000 | 100 |
-| Min Asset share | $500,000    | 5   |
-| Max Asset share | $4,000,000  | 40  |
-
-_Table 8: Scenario's setting._
-
-The following criteria are used to organize investors who will become future owners of an asset:
-
-1. Oldest contribution has higher priority
-2. In order to get a list of eligible investors, temporary shares are attributed as below:
-
-- If the investor’s invested amount in the housing fund is greater than maximum authorized contribution to a purchase, maximum contribution is selected (40% of the purchase price)
-- If the investor's invested amount in the housing fund is in the normal range (between 5% & 40% of the purchase price), then the share is calculated as a percentage of the purchase price.
-
-|  INVESTORS   | contribution Age (in blocks) | Contribution to the fund | Temporary share (%) |
-| :----------: | :--------------------------: | :----------------------: | :-----------------: |
-|  KillMonger  |              55              |      $6,000,000.00       |         40          |
-|    Aluman    |              54              |      $9,000,000.00       |         40          |
-|  Shikamaru   |              53              |      $3,500,000.00       |         35          |
-|   Geraldo    |              52              |      $8,000,000.00       |         40          |
-|    Obito     |              51              |      $5,000,000.00       |         40          |
-|     Hans     |              50              |      $7,000,000.00       |         40          |
-| Alice//stash |              49              |      $3,000,000.00       |         30          |
-|  Bob//stash  |              48              |      $2,000,000.00       |         20          |
-
-_Table 9: Temporary asset share distribution._
-
-The next step explains how the Eligible investors list is used to distribute the asset among the investors. In this new scenario, Mr. A already received his asset share (x0_final). Other members still have temporary shares, and the diagram below explains the process used to determine Mr. B final share (x1_final). Y is the total asset share: 100%.
-
-![bidding flow](../../img/bidding_flow.jpg)
-_Figure 2 - Final Asset share calculation process._
-
-The same process is used for Mr. C share calculation. In the case of Mr. C however, instead of (Y-x0_final) in check no. 1, we will use: (Y - x0_final - x1_final), as we want the remaining asset share after distribution to Mr. B when doing the different checks.
-
-## 7) Finalizer Pallet
-
-**Onboarded** assets still need to go through a final round of scrutiny before being considered valid for `purchase`.
-Throughout the **Finalizer** pallet, a _Notary_ receives **Onboarded** assets information from the **Bidding** pallet,
-and conducts a deeper off-chain legal investigation: the asset's status then changes from **Onboarded** to **Finalising**.
-Assets accepted by the _Notary_ receive the status **Finalised**, while others are **Rejected**.
-
-<table>
-<tbody>
-<tr>
-<td>&nbsp;</td>
-<td>Servicer</td>
-<td style={{color:'red'}}>Seller</td>
-<td style={{color:'red'}}>Notary</td>
-<td>Representative</td>
-<td>Investor</td>
-<td>Tenant</td>
-</tr>
-<tr>
-<td colspan="7"><b>Available Fields/Information</b></td>
-</tr>
-<tr>
-<td>account_id</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>age</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>activated</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>verifier</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td colspan="7"><b>Available Actions</b></td>
-</tr>
-<tr>
-<td>validate_transaction_asset</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>reject_transaction_asset</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>cancel_transaction_asset</td>
-<td>✖</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-</tbody>
-</table>
-
-_Table 10: Available Information and actions for **Notary** and **Seller** roles in the **Finaliser Pallet**._
-
-## 8) Share Distributor pallet
-
-Once an asset has the status **Finalised**, the **Bidding** pallet will first use the **Share Distributor** pallet to create a virtual account connected to the new owners. This virtual will store the NFT created earlier during asset submission by the seller. Once it is confirmed that the Nft corresponding to this asset, was transfered from the Seller to the virtual account/asset owners, the seller account finally receives the payment due for the asset purchase.
-
-![share distributor](../../img/workflow_p1.png)
-_Figure 2 - Share Distributor flow part.1: Creation of a virtual account to store the asset NFT_
-
-In the second task of the **Share_Distributor** pallet, the virtual account mints 1000 ownership tokens specific to the asset. These tokens will
-be distributed to the owners according to their contribution to the asset purchase: a 20% contribution will receive 200 ownership tokens. The possession of ownership tokens, together with the informations contained in the Nft, stored in the virtual account, are what define the fractional ownership of the asset by an individual in the **Fair Squares** ecosystem.
-
-![share distributor](../../img/workflow_p2.png)
-_Figure 2 - Share Distributor flow part.2: Minting and distribution of Ownership tokens by the virtual account._
-
-Up until this point the purpose of the workflow was to purchase an asset. With the **Asset Management** & **Tenancy** pallets, we are entering the second part of the workflow, revolving around the purchased asset management.
-
-## 9) Tenancy pallet
-
-There are no string attached after receiving the _Tenant_ role in the **Role Pallet**. However, in order to become an active _Tenant_, the **Tenancy Pallet**
-must be used.
-
-- First and foremost, the **Tenancy Pallet** allows a prospecting _Tenant_ to request a purchased asset. For this purpose, the future _Tenant_ will have to register more informations about himself, and become a prospecting/registered _Tenant_. The asset request notifies the corresponding Representative, who, after evaluation of the _Tenant_ profile, will provide his/her judgement to the asset Owners, and start a referendum for them to take the final decision.
-- Once accepted by a group of owner, the prospecting _Tenant_ can pay the guaranty deposit of the asset, and seal the deal. this action connects him to the asset requested.
-- Finally, the **Tenancy Pallet** allows the _Tenant_ to pay his monthly rent at any moment. The length of the lease contract being 1 year, the _Tenant_ won't be able to do more than 12 payments.
-
-<table>
-<tbody>
-<tr>
-<td>&nbsp;</td>
-<td>Servicer</td>
-<td>Seller</td>
-<td>Notary</td>
-<td>Representative</td>
-<td>Investor</td>
-<td style={{color:'red'}}>Tenant</td>
-</tr>
-<tr>
-<td colspan="7"><b>Available Fields/Information</b></td>
-</tr>
-<tr>
-<td>account_id</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>rent</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>age</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>asset_account</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>contract_start</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>remaining_rent</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>remaining_payment</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>registered</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-</tr>
-<tr>
-<td colspan="7"><b>Available Actions</b></td>
-</tr>
-<tr>
-<td>request_asset</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>pay_guaranty_deposit</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>pay_rent</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-</tr>
-</tbody>
-</table>
-
-_Table 11: Available Information and actions for **Tenant** role in the **Tenancy Pallet**._
-
-## 10) Asset Management pallet
-
-The implemented workflow in this pallet is as follows:
-
-<table>
-<tbody>
-<tr>
-<td>&nbsp;</td>
-<td>Servicer</td>
-<td>Seller</td>
-<td>Notary</td>
-<td style={{color:'red'}}>Representative</td>
-<td style={{color:'red'}}>Investor</td>
-<td>Tenant</td>
-</tr>
-<tr>
-<td colspan="7"><b>Available Fields/Information</b></td>
-</tr>
-<tr>
-<td>account_id</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-<td>◎</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>activated</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>age</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>asset_account</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-<td>✖</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>index</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-</tr>
-<tr>
-<td>share</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>selections</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>registered</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-</tr>
-<tr>
-<td colspan="7"><b>Available Actions</b></td>
-</tr>
-<tr>
-<td>launch_representative_session</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>owners_vote</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-<td>✖</td>
-</tr>
-<tr>
-<td>launch_tenant_session</td>
-<td>✖</td>
-<td>✖</td>
-<td>✖</td>
-<td>◎</td>
-<td>✖</td>
-<td>✖</td>
-</tr>
-</tbody>
-</table>
-
-_Table 12: Available Information and actions for **Representative** and **Investor** roles in the **Asset_Management Pallet**._
-
-1. Election of a **Representative** by the new owners
-
-   An aspirant **Representative** can request the role through the **Roles Pallet**, and is added to a waiting list. Using the **Asset_Management Pallet**, any owner of any asset can consult the list, and open a referendum for his/her group of owners, in order to elect a **Representative**. An elected **Representative** is connected to the corresponding asset of the owner's group. Note that one **Representative** can be connected to several assets.
-
-2. **Tenant** Selection by Representative & owners
-
-   Once a **Representative** is connected to an asset, a prospective **Tenant** can send a request for this Asset (see **Tenancy Pallet**). The **Representative** will then evaluate the **Tenant** request, and submit the result of the evaluation together with the **Tenant** information to the _Owners_, while at the same time, opening a referendum for the _Owners_ to vote on this proposal.
-
-3. Guaranty Deposit payment
-
-   If accepted by the _Owners_ after a referendum, the **Tenant** receives a Guaranty Deposit payment request, sent by the _Owners_ asset's account. Paying the guaranty deposit will seal the agreement, and connect the **Tenant** to the requested asset.
-
-4. Periodic actions
-
-   Additionally, the **Asset_Management Pallet** will periodically check the payment status of active **Tenants**, and notify them if they are in debts. If a rent has been payed, It will distribute the rent to the _Owners_, after reserving a small percentage for future asset maintenance expenses.
+```mermaid
+---
+config:
+   layout: elk
+---
+flowchart TD
+   A[Appraisal Providers] -->|Signed Values| B[Valuation Aggregator]
+   B --> C[Legal Review]
+   C --> D[OpenGov Referendum]
+   D -->|Approve| E[Capital Allocation]
+   D -->|Reject| R[Archive]
+   E --> F[Unit Mint + NAV]
+   F --> G[Monitoring]
+   G -->|Anomaly| H[Emergency Track]
+   H --> P[Pause / Parameter Update]
+   P --> B
+   style R fill:#fdd,stroke:#c33
+   style H fill:#ffe9b3,stroke:#d68b00
+```

@@ -13,9 +13,14 @@ const config = {
   url: 'https://docs.fair-squares.nl',
   baseUrl: '/',
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  markdown: { mermaid: true },
+  markdown: {
+    mermaid: true,
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
+  themes: ['@docusaurus/theme-mermaid'],
   // themeConfig: {
   //   image: 'img/FS-light-banner.png',
   //   mermaid: {
@@ -102,10 +107,6 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Polkaverse',
-                href: 'https://polkaverse.com/accounts/3sJC5B7bzqbTYJvQSWvaT4CgXJHdwv4EEduP4oE8hEGS8749',
-              },
-              {
                 label: 'Discord',
                 href: 'https://discordapp.com/invite/5u3dxE49V5',
               },
@@ -132,6 +133,9 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Fair Squares, Built with Docusaurus.`,
       },
       colorMode: { defaultMode: 'light', disableSwitch: false, respectPrefersColorScheme: true },
+      mermaid: {
+        theme: { light: 'neutral', dark: 'forest' },
+      },
     }),
 };
 

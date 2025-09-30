@@ -22,91 +22,95 @@ flowchart TB
   end
 
   subgraph L1[Governance & Access Layer]
-    R[Roles Pallet]\nKYC / Role Registry
-    VOT[Voting Pallet]\nCouncil + Investor Voting
+    R[Roles Pallet<br/>KYC / Role Registry]
+    GOV[OpenGov Integration<br/>Tracks + Referenda]
   end
 
   subgraph L2[Asset Lifecycle Layer]
-    ONB[Onboarding Pallet]\nProposal Intake
-    NFT[NFT Pallet]\nAsset Tokenization
-    BID[Bidding Pallet]\nOwner List Derivation
-    FIN[Finalizer Pallet]\nOff‑chain Legal Checks
-    SHARE[Share Distributor]\nVirtual Account + Ownership Tokens
+    ONB[Onboarding Pallet<br/>Proposal Intake]
+    VAL[Valuation / Appraisal<br/>Off-chain Reports]
+    FIN[Finalizer Pallet<br/>Off-chain Legal Checks]
+    POOL[Asset Pool Engine<br/>Pool Units Mint/Burn]
   end
 
-  subgraph L3[Capital & Tenancy Layer]
-    FUND[Housing Fund Pallet]\nCapital Pool
-    TEN[Tenancy Pallet]\nLease Flow & Payments
-    AM[Asset Mgmt Pallet]\nRep/Tenant Selection + Rent Distribution
+  subgraph L3[Capital & Operations Layer]
+    FUND[Housing Fund Pallet<br/>Capital Reserve]
+    CORP[Housing Corporation<br/>External Management]
+    AM[Asset Ops / Monitoring<br/>Reporting & Oversight]
   end
 
   subgraph L4[External / Off-chain]
-    LEG[Legal Agreements]\nJurisdictional Docs
+    LEG[Legal Agreements<br/>Jurisdictional Docs]
     BANK[Stablecoin / Fiat Ramps]
     ORAC[Market / Valuation Inputs]
   end
 
   A & B & C & D & E & F --> R
-  R --> VOT
+  R --> GOV
   R --> ONB
-  C --> ONB --> NFT --> VOT
-  VOT --> BID --> FIN --> SHARE --> AM
-  A --> FUND --> BID
-  SHARE --> TEN --> AM
+  C --> ONB --> VAL --> FIN --> POOL
+  GOV --> POOL
+  A --> FUND --> POOL
+  POOL --> AM
+  CORP --> AM
+  CORP --> LEG
   FIN --> LEG
   FUND --> BANK
-  LEG --> TEN
-  ORAC --> ONB
+  ORAC --> VAL
 ```
 
 ### Reading The Diagram
 - Blue/Green boxes = on‑chain pallets.
 - Grey boxes = external dependencies or off‑chain validation domains.
-- Horizontal progression = lifecycle from idea → verified asset → fractional ownership → tenancy operations.
+- Horizontal progression = lifecycle from idea → verified asset → pooled backing → external tenancy management.
 
 ## 2. Legal & Compliance Touchpoints
 
 | Phase | Primary Pallet(s) | Legal Concern | Mitigation Pattern |
 |-------|-------------------|---------------|--------------------|
-| Proposal Intake | Onboarding / NFT | Authentic seller representation | Role verification + proposal fee staking |
-| Council Review | Voting | Governance legitimacy | Multi‑role council, recorded decisions |
-| Finalization | Finalizer | Title, encumbrances, jurisdiction | Off‑chain notarization checkpoint |
-| Ownership Tokenization | Share Distributor | Securities characterization | Fractional utility framing + governance logs |
-| Tenancy Activation | Tenancy / Asset Mgmt | Lease enforceability | Hybrid on‑chain record + off‑chain standardized lease |
+| Proposal Intake | Onboarding | Authentic seller representation | Role verification + proposal fee staking |
+| Valuation | Valuation / Appraisal | Fair market assessment | Multi‑source appraisal + track record |
+| Legal Finalization | Finalizer | Title, encumbrances, jurisdiction | Off‑chain notarization checkpoint |
+| Pool Expansion | Asset Pool Engine | Asset-to-pool correctness | Mint policy (only additive unless disposal) + audit trail |
+| Operational Management | Housing Corporation | Tenant protection, compliance | Regulated third‑party management agreements |
 
 ## 3. Financial Flow (Simplified)
 
 ```mermaid
 sequenceDiagram
+  autonumber
   participant Inv as Investor
   participant FUND as Housing Fund
-  participant BID as Bidding
-  participant SHARE as Share Distributor
-  participant SELL as Seller
-  participant TEN as Tenancy
-  participant OWN as Owners
+  participant ONB as Onboarding
+  participant VAL as Valuation
+  participant FIN as Finalizer
+  participant POOL as Asset Pool
+  participant CORP as Housing Corp
 
   Inv->>FUND: Bond Capital (Stable asset)
-  SELL->>Onboarding: Submit Asset Proposal
-  Onboarding->>Voting: Council Referendum
-  Voting-->>BID: Approved Asset
-  BID->>FUND: Check Liquidity
-  BID->>SHARE: Derive Owner Set
-  SHARE->>SELL: Release Purchase Payment
-  SHARE->>OWN: Mint Ownership Tokens
-  Tenant->>TEN: Request Asset / Pay Deposit
-  TEN->>OWN: Periodic Rent Distribution
+  ONB->>ONB: Collect Proposal + Seller Docs
+  ONB->>VAL: Request Appraisals
+  VAL-->>FIN: Valuation Reports
+  FIN->>FIN: Legal & Title Checks
+  FIN-->>POOL: Approve Asset Inclusion
+  POOL->>POOL: Mint Pool Units (proportional)
+  FUND->>POOL: Allocate Capital for Acquisition
+  CORP->>POOL: Operational Metrics (Occupancy/Rent)
+  CORP->>FUND: Net Cashflow Settlement
+  POOL->>Inv: Accrue NAV Growth (implicit)
 ```
 
 ## 4. Data Entities Snapshot
 
 | Entity | Source | Key Fields (Illustrative) | Downstream Usage |
 |--------|--------|---------------------------|------------------|
-| RoleAccount | Roles | account_id, role, activated | Gating actions (Onboarding, Voting) |
-| Proposal | Onboarding | asset_id, price, status, metadata_hash | Voting, Bidding, Finalizer |
-| FundContribution | Housing Fund | account_id, amount, age | Bidding ownership algorithm |
-| OwnerShare | Share Distributor | asset_id, owner, share_parts | Rent distribution, governance |
-| TenantLease | Tenancy | tenant_id, asset_id, rent, remaining_payments | Rent enforcement / Asset Mgmt |
+| RoleAccount | Roles | account_id, role, activated | Gating actions (Onboarding, Governance) |
+| Proposal | Onboarding | proposal_id, asset_metadata_hash, seller_id, status | Valuation, Finalizer |
+| Appraisal | Valuation | appraisal_id, proposal_id, value_amount, method, timestamp | Finalizer cross‑checks |
+| PoolUnit | Asset Pool | pool_id, total_units, nav_per_unit | Investor dashboards, accounting |
+| FundContribution | Housing Fund | account_id, amount, bonded_since | Pool capacity planning |
+| GovernanceTrack | OpenGov | track_id, purpose, decision_params | Referendum routing, risk gating |
+| CorpAgreement | Off‑chain | corp_id, sla_hash, jurisdictions | Compliance oversight |
 
 ## 5. Replacement of Static Images
 
@@ -127,4 +131,4 @@ Legacy static images (e.g., `bidding_flow.jpg`, `workflow_p1.png`, `workflow_p2.
 - Introduces an entity portability map for future API / indexer design.
 
 ---
-_Last updated: 2025-09-29 (update manually when revising)_
+_Last updated: 2025-09-29 (asset pool + OpenGov + external corp ops refactor)_

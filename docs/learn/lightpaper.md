@@ -22,7 +22,7 @@ Recent European reports underscore that the persistent issues with social housin
 
 For a majority, direct real estate investment remains elusive without middle-men like ETFs or funds. Coupled with the expertise essential for home investment, the current scenario inadvertently propagates inequality[^3]. Fair Squares (FS) seeks to bridge this by fostering collective investment and shared gains.
 
-FS facilitates fractional ownership, allowing investors to lease their share. This collective model promotes shared investment in, and benefits from, properties.
+FS facilitates pooled fractional exposure: properties enter a managed asset pool, and investors hold fungible pool units representing proportional economic exposure. Individual properties are not minted as discrete NFTs; instead, inclusion adjusts pool Net Asset Value (NAV) and may trigger new units minting (additive growth model).
 
 By introducing an innovative, transparent investment approach, Fair Squares aims to address the challenges of affordable housing while catering to the interests of socially conscious investors.
 
@@ -36,9 +36,9 @@ Pooling funds from individual investors, FS purchases and leases properties. The
 
 Property ownership under FS relies on consensus by its investors about the intended social returns. These commitments are then anchored and facilitated by the FS platform, aiming to reduce housing expenses.
 
-### Decentralized Governance
+### Decentralized Governance (OpenGov Tracks)
 
-FS thrives through active community engagement. Our governance structure prioritizes evolving the protocol based on continuous dialogue with FS members. The FS council comprises experts committed to promoting fair housing practices. Concurrently, FS token holders can participate through the democracy module, influencing decisions and proposals.
+Governance now leverages Polkadot OpenGov track mechanics. Rather than a static council + investor two‑phase vote, domain‑specific tracks (e.g., Asset Admission, Housing Corporation Accreditation, Parameter Tuning) frame risk and decision latency. Each proposal routes to a track with its own origin, voting curve, and conviction weighting. Track customization lets Fair Squares impose additional safety for high‑impact actions (e.g., adding a new housing corporation) while keeping low‑risk parameter tweaks nimble.
 
 ### Asset Verification
 
@@ -48,9 +48,9 @@ The unique challenge for blockchain platforms interacting with tangible assets i
 
 FS envisions a network where registered stakeholders offer services and are remunerated by FS. Given the nature of blockchain disagreements and the need for trust in real-world evaluations, we emphasize the verification of these stakeholders. Their roles span appraisers, inspectors, brokers, and notaries, among others.
 
-### Market Dynamics & Tenancy
+### Market Dynamics & External Tenancy Operations
 
-Investors, through FS, can trade fractional property shares on secondary markets, ensuring liquidity. In the realm of rentals, FS's primary objective is to lease acquired properties, ensuring competitive returns for investors. Tenants interface with a separate portal, and FS's competitive rates promise an edge over conventional rental markets.
+Investors can trade pool exposure (subject to future liquidity mechanisms) without needing per‑property share order books. Tenancy relationships with end users are managed by accredited housing corporations under standardized off‑chain agreements. These corporations feed occupancy and cashflow metrics back to the protocol (or associated indexing layer) enabling transparent NAV evolution while isolating day‑to‑day tenant management from the core chain.
 
 ### Key Advantages
 
@@ -72,27 +72,38 @@ All stakeholders contribute to FS's evolution. As we craft pilot models for sust
 
 ## How Fair Squares Operates
 
-### FS Architecture
+### FS Architecture (Updated Pool & OpenGov)
 ```mermaid
-flowchart LR
-	subgraph Proposal
-		A[Seller Submits Proposal]\nOnboarding
-		B[Council Review]\nVoting Phase 1
-	end
-	subgraph Investment
-		C[Investor Vote]\nVoting Phase 2
-		D[Housing Fund Allocation]
-	end
-	subgraph Ownership
-		E[Ownership Token Mint]\nShare Distributor
-		F[Representative Election]\nAsset Mgmt
-	end
-	subgraph Tenancy
-		G[Tenant Application]\nTenancy
-		H[Lease & Rent Distribution]
+flowchart TB
+	subgraph Gov[OpenGov Tracks]
+		T1[Track: Asset Admission]
+		T2[Track: Corp Accreditation]
+		T3[Track: Params / Risk]
 	end
 
-	A --> B --> C --> D --> E --> F --> G --> H
+	subgraph Intake[Onboarding]
+		P[Seller Proposal]
+		V[Valuation Feeds]
+		L[Legal / Title Checks]
+	end
+
+	subgraph Pool[Asset Pool Lifecycle]
+		INC[Include Asset -> Mint Pool Units]
+		NAV[NAV Update Engine]
+	end
+
+	subgraph Ops[External Operations]
+		HC[Housing Corporation]
+		MET[Occupancy & Cashflow Metrics]
+	end
+
+	Investor[(Investor Capital)] -->|Bond| Fund[Housing Fund]
+	Fund -->|Allocate| INC
+	P --> V --> L --> INC
+	Gov --> INC
+	Gov --> HC
+	HC --> MET --> NAV --> Investor
+	INC --> NAV
 ```
 
 _Mermaid diagram replaces prior static image – see `technology/architecture.md` for layered variant._
@@ -107,10 +118,10 @@ Property listings from homeowners, organizations, and
 
  real estate agencies are integrated onto the platform. Each listing goes through an extensive verification process, ensuring only genuine, viable properties are available.
 
-### Voting & Governance
+### Governance Mechanics
 
-Investment decisions, steered by user consensus, determine property acquisitions. All token holders can actively participate in the democratic process, and decisions receive legal weight through on-chain governance mechanisms. This model promotes decentralized decision-making and instills ownership beyond property acquisition.
+Each governance action specifies its OpenGov track; participation weights conviction and may be subject to bespoke decision curves (e.g., longer enactment for accreditation). Asset inclusion only proceeds after the corresponding track referendum reaches approval; upon enactment the asset pool mints additional units reflecting contributed value subject to acquisition capital allocation.
 
 ### Returns & Profit Sharing
 
-FS's primary revenue stream is lease-based. The model promotes competitive rents and assures tenants' stability. Revenues are allocated to operational costs, then distributed to investors proportionally, ensuring an equitable return model. FS also offers a secondary market for investors to trade property shares and the option to sell their shares back to the fund.
+Protocol value accrues via net operating income (NOI) data provided by housing corporations. Gross rent, minus agreed service and maintenance costs, flows to the fund; updated NAV implicitly adjusts investor exposure (and potentially informs redemption / issuance curves). Secondary liquidity will reference pool units rather than per‑property slices. Burn events occur only if assets are divested or materially impaired.

@@ -1,7 +1,7 @@
 # Fair Squares Documentation - AI Coding Agent Instructions
 
 ## Project Overview
-Fair Squares (FS) documentation site built with **Docusaurus 3** - covers a decentralized housing protocol that enables fractional property ownership and affordable housing through blockchain technology. This is a documentation-only repository, not the main Fair Squares protocol implementation.
+Fair Squares (FS) documentation site built with **Docusaurus 3** - describes a pooled housing asset protocol (fungible pool units, OpenGov governance tracks, external housing corporation operations). This repository holds documentation only, not the runtime code.
 
 ## Architecture & Key Components
 
@@ -14,7 +14,7 @@ Fair Squares (FS) documentation site built with **Docusaurus 3** - covers a dece
 
 ### Critical Configuration Files
 - `docusaurus.config.js` - Main config with **mermaid diagrams enabled**, dual language support (en/nl), GitHub Pages deployment
-- `package.json` - Uses Docusaurus 3.0 with mermaid theme addon
+- `package.json` - Uses Docusaurus 3.9.x with mermaid theme addon
 - `.github/workflows/` - Auto-deploy to GitHub Pages on main branch pushes
 
 ## Development Workflow
@@ -38,10 +38,10 @@ yarn deploy         # Deploy to GitHub Pages (requires GIT_USER)
 2. **Learn** (`docs/learn/`) - Lightpaper, stakeholder analysis
 3. **Technology** (`docs/technology/`) - Architecture diagrams, pallet design
 4. **Legal Framework** (`docs/legal-framework/`) - Compliance documentation
-5. **Guides** (`docs/guides/`) - External links to Polkaverse articles
+5. **Guides** (`docs/guides/`) - External resource links (remove/avoid dead Polkaverse URLs)
 
 ### Content Features
-- **Mermaid diagrams** extensively used in `technology/design.md` for workflow visualization
+- **Mermaid diagrams** extensively used in `technology/design.md` & `technology/architecture.md` for lifecycle, state machines, and sequences
 - **Embedded iframes** for external content (YouTube, Eurostat charts)
 - **Markdown tables** for role permissions and stakeholder comparisons
 - **Footnote references** using `[^1]` syntax
@@ -57,9 +57,9 @@ yarn deploy         # Deploy to GitHub Pages (requires GIT_USER)
 
 ### Fair Squares Context
 The documentation describes a **Substrate/Polkadot-based blockchain protocol** with:
-- **Multiple pallets**: Roles, Housing Fund, Onboarding, NFT, Voting, Bidding, etc.
-- **Stakeholder roles**: Servicer, Seller, Notary, Representative, Investor, Tenant
-- **Asset workflow**: From proposal creation → council review → investor voting → purchase → rental management
+- **Current pallets/modules**: Roles, Housing Fund, Onboarding, Finalizer, Asset Pool Engine, Governance (OpenGov integration), Monitoring/Metrics. (Legacy: NFT, Bidding, Share Distributor, Tenancy removed.)
+- **Stakeholder roles**: Servicer, Seller, Notary, Investor (Representative & Tenant now legacy/on hold; external housing corporations manage tenancy off-chain)
+- **Asset workflow (new)**: Proposal intake → multi‑appraisal valuation → legal finalization → OpenGov asset admission track → capital allocation → pool unit mint → external operations metrics → NAV updates.
 
 ### Technical Integration Points
 - **GitHub Pages deployment** with custom domain
@@ -77,7 +77,7 @@ The documentation describes a **Substrate/Polkadot-based blockchain protocol** w
 
 ### Modifying Existing Content
 - Large tables may need horizontal scrolling consideration
-- Mermaid diagrams require specific syntax - reference existing patterns in `design.md`
+- Mermaid diagrams require specific syntax - reference updated patterns (`design.md` uses stateDiagram-v2, flowchart, sequence; multiline labels use <br/>)
 - Maintain consistency with role-based table structures (◎/✖ symbols)
 - Preserve external links to community resources (Discord, GitHub, Polkaverse)
 
@@ -88,7 +88,17 @@ The documentation describes a **Substrate/Polkadot-based blockchain protocol** w
 - **Mermaid syntax**: Must be in fenced code blocks with `mermaid` language tag
 
 ## Key Files to Reference
-- `docs/technology/design.md` - Complex workflow diagrams and stakeholder tables
+- `docs/technology/design.md` - Updated pooled model design (state machines, governance tracks, no PNG images)
 - `docusaurus.config.js` - Configuration patterns for navbar, footer, themes
 - `src/components/HomepageFeatures/index.js` - Component structure examples
 - `.github/workflows/deploy.yml` - CI/CD deployment pattern
+
+
+
+# removeal
+
+### Migration Notes (for AI agents)
+- Replace any remaining per‑asset NFT or Share Distributor references with Pool Unit model.
+- Avoid generating PNG workflow images; use Mermaid diagrams instead.
+- Governance examples should mention OpenGov tracks (Asset Admission, Corp Accreditation, Param Tuning, Emergency) instead of council/investor dual phases.
+- External tenancy flows reference Housing Corporations; do not model on-chain tenant referendum logic.

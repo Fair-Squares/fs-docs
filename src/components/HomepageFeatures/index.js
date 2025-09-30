@@ -4,26 +4,26 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Discover Our Mission and Design Principles',
+    title: 'Pooled Housing Cooperative Explained',
     description: (
       <>
-        Dive deep into Fair Squares: understand the ethos behind our housing cooperation and the intricacies of our DAO protocol, all aimed at fostering equitable housing.
+        Explore how Fair Squares bundles validated properties into a shared NAV pool where investors hold fungible units, while accredited housing corporations handle on-the-ground tenancy.
       </>
     ),
   },
   {
-    title: 'Discover the Technological Foundation',
+    title: 'Governance & Safeguards with OpenGov',
     description: (
       <>
-        Designed as a specialized parachain/thread, Fair Squares leverages cutting-edge technology to cultivate a transparent, decentralized housing cooperative. Our streamlined back-end is dedicated solely to fostering collaborative housing.
+        Follow the intake lifecycle—from proposal and multi-appraisal valuation to legal finalization and OpenGov asset admission tracks—plus learn how metrics feeds keep capital allocation and risk controls transparent.
       </>
     ),
-},
+  },
   {
-    title: 'Embarking on Your Journey',
+    title: 'Build with the Fair Squares Toolkit',
     description: (
       <>
-        Navigate your way with ease. Through our extensive guides and tutorials, learn the ins and outs of the Fair Squares application and become a part of the revolution.
+        Jump into guides, architecture notes, and design references to prototype integrations, understand pallet APIs, or onboard stakeholders with ready-to-share visual narratives and Mermaid diagrams.
       </>
     ),
   },

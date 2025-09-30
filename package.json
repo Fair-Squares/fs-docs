@@ -16,10 +16,10 @@
     "lint:links": "grep -R --line-number 'http://' docs || echo 'No insecure links'"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.0.0",
-    "@docusaurus/preset-classic": "^3.0.0",
-    "@docusaurus/theme-classic": "^3.0.0",
-    "@docusaurus/theme-mermaid": "^3.0.0",
+    "@docusaurus/core": "^3.9.1",
+    "@docusaurus/preset-classic": "^3.9.1",
+    "@docusaurus/theme-classic": "^3.9.1",
+    "@docusaurus/theme-mermaid": "^3.9.1",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^1.2.1",
     "prism-react-renderer": "^2.1.0",
@@ -27,13 +27,13 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.0.0"
+    "@docusaurus/module-type-aliases": "^3.9.1"
   },
   "resolutions": {
-    "@docusaurus/core": "^3.0.0",
-    "@docusaurus/preset-classic": "^3.0.0",
-    "@docusaurus/theme-classic": "^3.0.0",
-    "@docusaurus/theme-mermaid": "^3.0.0"
+    "@docusaurus/core": "^3.9.1",
+    "@docusaurus/preset-classic": "^3.9.1",
+    "@docusaurus/theme-classic": "^3.9.1",
+    "@docusaurus/theme-mermaid": "^3.9.1"
   },
   "browserslist": {
     "production": [

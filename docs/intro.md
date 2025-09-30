@@ -4,13 +4,13 @@ sidebar_position: 1
 
 # Introduction to Fair Squares (FS)
 
-Welcome to Fair Squares (FS) – a transformative platform designed to reshape the future of equitable real estate ownership. FS bridges the gap between homeowners, renters, properties, and investors. We're on a mission to create an affordable housing landscape where house investors not only see financial returns but also drive positive societal change, while renters find cost-effective housing solutions.
+Welcome to Fair Squares (FS) – a protocol for pooled, impact‑aligned housing capital. Instead of tokenizing each individual property, assets are admitted into a collectively managed pool; investors hold fungible pool units whose value reflects the Net Asset Value (NAV) of all managed housing assets.
 
-Our vision is to foster a housing market that’s transparent, equitable, and accessible for all participants: tenants, co-owners, and investors. Central to FS is a community-endorsed protocol that oversees rental agreements with properties that have been jointly invested in. This model allows communities to own and manage homes, welcoming new entrants into the rental landscape. Furthermore, our unique crowd-financing approach offers up to 30% lower rent compared to the free market, aligning the interests of stakeholders in a self-sovereign ecosystem.
+The protocol’s focus is affordability, transparency, and regulatory alignment. Investor capital expands the pool; approved housing corporations (external entities) handle day‑to‑day tenant relationships under standardized agreements. Operational performance and net cashflow data flow back, informing NAV progression and governance insight.
 
 ### Our Mission and Vision
 
-While our goal is to make the housing market more accessible and fair, it's also about empowering potential real estate investors. Many seek to make a social impact but may not have the resources for a direct property purchase. Our system encourages a coordinated effort among stakeholders, ensuring alignment towards our mission, all governed by strict standards for fairness and transparency. This adaptable model is driven by its stakeholders, ensuring housing equity remains at its forefront.
+While our goal is to widen access to stable, affordable housing, we also empower impact‑oriented investors lacking the capital or scale for direct property ownership. Coordinated governance (via Polkadot OpenGov tracks customized for FS) ensures high‑impact actions—like accrediting a new housing corporation or altering admission criteria—undergo the appropriate scrutiny and delay, while low‑risk parameter adjustments remain agile.
 
 ### Engage with Us
 
@@ -22,6 +22,6 @@ For deeper insights into our initiative or to connect with like-minded individua
 
 ### Our Approach
 
-We envision Fair Squares not as a traditional business, but as a neutral housing protocol. The protocol's primary objective is to address the core need of housing, aiming to mold this into a universally consistent, predictable, and affordable solution. Revenue generated will be governed by its token holders, stemming from various transactions on the platform.
+We envision Fair Squares as neutral infrastructure: an open coordination layer for housing capital allocation. Revenue (net operating income settlements from housing corporations, potential protocol fees) is routed transparently and reflected in pool economics. Token holders govern upgrade paths and risk parameters through configurable tracks—minimizing governance surface while maintaining resilience.
 
 We're glad to have you on this journey towards a more equitable housing future. Welcome aboard!
