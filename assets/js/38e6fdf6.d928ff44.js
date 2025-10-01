@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkfs_docs=self.webpackChunkfs_docs||[]).push([[755],{6996:e=>{e.exports=JSON.parse('{"title":"Legal","slug":"/category/legal","permalink":"/docs/category/legal","navigation":{"previous":{"title":"W3F milestone guides","permalink":"/docs/guides/"},"next":{"title":"Legal Framework","permalink":"/docs/legal-framework/"}}}')}}]);

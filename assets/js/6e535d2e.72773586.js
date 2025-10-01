@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkfs_docs=self.webpackChunkfs_docs||[]).push([[606],{7341:e=>{e.exports=JSON.parse('{"title":"Technology","slug":"/category/technology","permalink":"/docs/category/technology","navigation":{"previous":{"title":"Future Stakeholders","permalink":"/docs/learn/stakeholders"},"next":{"title":"Introduction","permalink":"/docs/technology/intro"}}}')}}]);
